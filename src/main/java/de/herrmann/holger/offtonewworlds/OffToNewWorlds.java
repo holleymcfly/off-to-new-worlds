@@ -1,19 +1,38 @@
 package de.herrmann.holger.offtonewworlds;
 
 import com.jme3.app.SimpleApplication;
-import de.herrmann.holger.offtonewworlds.settings.OffToNewWorldsSettings;
+import com.jme3.light.DirectionalLight;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Spatial;
 
 public class OffToNewWorlds extends SimpleApplication {
 
     public static void main(String[] args) {
 
         OffToNewWorlds offToNewWorlds = new OffToNewWorlds();
-        OffToNewWorldsSettings.get().getDisplaySettings().setToFullScreenWindows(offToNewWorlds);
+//        OffToNewWorldsSettings.get().getDisplaySettings().setToFullScreenWindows(offToNewWorlds);
         offToNewWorlds.start();
     }
 
     @Override
     public void simpleInitApp() {
 
+        Spatial grass = assetManager.loadModel("assets/ground/grass.glb");
+        grass.move(new Vector3f(0, 0, 0));
+        rootNode.attachChild(grass);
+
+        Spatial grass2 = assetManager.loadModel("assets/ground/grass.glb");
+        grass2.move(new Vector3f(2.0f, 0, 0));
+        rootNode.attachChild(grass2);
+
+        DirectionalLight sun = new DirectionalLight();
+        sun.setDirection(new Vector3f(-0.1f, -0.7f, -1.0f).normalizeLocal());
+        rootNode.addLight(sun);
+
+        final RtsCamera rtsCamera = new RtsCamera(cam, rootNode);
+        rtsCamera.registerWithInput(inputManager);
+        rtsCamera.setCenter(new Vector3f(0,0f,0));
+
+        flyCam.setEnabled(false);
     }
 }
