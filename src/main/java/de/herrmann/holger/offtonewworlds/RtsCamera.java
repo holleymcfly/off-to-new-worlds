@@ -91,22 +91,27 @@ public class RtsCamera implements Control, ActionListener {
         inputManager.setCursorVisible(true);
     }
 
+    @Override
     public void write(JmeExporter ex) {
     }
 
+    @Override
     public void read(JmeImporter im) {
     }
 
+    @Override
     public Control cloneForSpatial(Spatial spatial) {
         RtsCamera other = new RtsCamera(cam, spatial);
         other.registerWithInput(inputManager);
         return other;
     }
 
+    @Override
     public void setSpatial(Spatial spatial) {
 
     }
 
+    @Override
     public void update(float tpf) {
 
         checkLeftRightMovement();
@@ -242,10 +247,12 @@ public class RtsCamera implements Control, ActionListener {
         this.center.set(center);
     }
 
+    @Override
     public void render(RenderManager rm, ViewPort vp) {
 
     }
 
+    @Override
     public void onAction(String name, boolean isPressed, float tpf) {
         int press = isPressed ? 1 : 0;
 
