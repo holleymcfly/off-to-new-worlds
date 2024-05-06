@@ -65,6 +65,8 @@ public class RtsCamera implements Control, ActionListener {
         setMaxSpeed(Degree.TILT, 1f, 0.4f);
         setMaxSpeed(Degree.DISTANCE, 15f, 0.4f);
         target.addControl(this);
+
+        initPosition();
     }
 
     public void setMaxSpeed(Degree deg, float maxSpd, float accelTime) {
@@ -156,6 +158,28 @@ public class RtsCamera implements Control, ActionListener {
         position.x = center.x + (float) (distance * Math.cos(tilt) * Math.sin(rot));
         position.y = center.y + (float) (distance * Math.sin(tilt));
         position.z = center.z + (float) (distance * Math.cos(tilt) * Math.cos(rot));
+
+        System.out.println("Position: " + position);
+        System.out.println("Center: " + center);
+        System.out.println("Distance: " + distance);
+        System.out.println("Tilt: " + tilt);
+        System.out.println("Rot: " + rot);
+
+
+        cam.setLocation(position);
+        cam.lookAt(center, new Vector3f(0, 1, 0));
+    }
+
+    /**
+     * Sets the position of the initial camera further away from the world.
+     */
+    private void initPosition() {
+
+        distance = 65f;
+
+        position.x = 0f;
+        position.y = 50f;
+        position.z = 50f;
 
         cam.setLocation(position);
         cam.lookAt(center, new Vector3f(0, 1, 0));
