@@ -13,6 +13,12 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.control.Control;
 import de.herrmann.holger.offtonewworlds.util.Util;
 
+/**
+ * Real time strategy camera.
+ * Scrolls to the left, right, up and down when the mouse moves near the borders.
+ * Scrolls into / out from the view using the mouse wheel.
+ * Rotates when holding the middle mouse button and moving the mouse.
+ */
 public class RtsCamera implements Control, ActionListener, AnalogListener {
 
     public enum Degree {
@@ -38,7 +44,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
 
     private final Vector3f center = new Vector3f();
     private float tilt = (float) (Math.PI / 4);
-    private float rot = 0;
+    private float rotate = 0;
     private float distance = 15;
 
     private static final int SIDE = Degree.SIDE.ordinal();
@@ -49,6 +55,14 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
 
     private boolean middleMouseButtonClicked = false;
 
+    private final String BACK = "Back";
+    private final String FORWARD = "Forward";
+    private final String LEFT = "Left";
+    private final String RIGHT = "Rigjt";
+    private final String MOUSE_MIDDLE = "MouseMiddleClick";
+    private final String UP = "Up";
+    private final String DOWN = "DOWN";
+
     public RtsCamera(Camera cam, Spatial target) {
         this.cam = cam;
 
@@ -58,11 +72,12 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
         setMinMaxValues(Degree.TILT, 0.2f, (float) (Math.PI / 2) - 0.001f);
         setMinMaxValues(Degree.DISTANCE, 2, Float.POSITIVE_INFINITY);
 
-        setMaxSpeed(Degree.SIDE, 10f, 0.4f);
-        setMaxSpeed(Degree.FWD, 10f, 0.4f);
+        setMaxSpeed(Degree.SIDE, 5f, 0.4f);
+        setMaxSpeed(Degree.FWD, 5f, 0.4f);
         setMaxSpeed(Degree.ROTATE, 2f, 0.4f);
         setMaxSpeed(Degree.TILT, 1f, 0.4f);
         setMaxSpeed(Degree.DISTANCE, 15f, 0.4f);
+
         target.addControl(this);
 
         initPosition();
@@ -78,18 +93,16 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
 
         inputManager.setCursorVisible(true);
 
-        String[] mappings = new String[]{"+DISTANCE", "-DISTANCE", "MIDDLECLICK"};
+        inputManager.addMapping(BACK, new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
+        inputManager.addMapping(FORWARD, new MouseAxisTrigger(MouseInput.AXIS_WHEEL, true));
+        inputManager.addMapping(MOUSE_MIDDLE, new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE));
+        inputManager.addListener(this, FORWARD, BACK, MOUSE_MIDDLE);
 
-        inputManager.addMapping("-DISTANCE", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
-        inputManager.addMapping("+DISTANCE", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, true));
-        inputManager.addMapping("MIDDLECLICK", new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE));
-        inputManager.addListener(this, mappings);
-
-        inputManager.addMapping("Left", new MouseAxisTrigger(MouseInput.AXIS_X, true));
-        inputManager.addMapping("Right", new MouseAxisTrigger(MouseInput.AXIS_X, false));
-        inputManager.addMapping("Up", new MouseAxisTrigger(MouseInput.AXIS_Y, true));
-        inputManager.addMapping("Down", new MouseAxisTrigger(MouseInput.AXIS_Y, false));
-        inputManager.addListener(this, "Left", "Right", "Up", "Down");
+        inputManager.addMapping(LEFT, new MouseAxisTrigger(MouseInput.AXIS_X, true));
+        inputManager.addMapping(RIGHT, new MouseAxisTrigger(MouseInput.AXIS_X, false));
+        inputManager.addMapping(UP, new MouseAxisTrigger(MouseInput.AXIS_Y, true));
+        inputManager.addMapping(DOWN, new MouseAxisTrigger(MouseInput.AXIS_Y, false));
+        inputManager.addListener(this, LEFT, RIGHT, UP, DOWN);
     }
 
     @Override
@@ -118,29 +131,21 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
         checkLeftRightMovement();
         checkUpDownMovement();
 
+        float tpfOriginal = tpf;
+
         for (int i = 0; i < direction.length; i++) {
             int dir = direction[i];
 
-            tpf = checkMouseScrolling(tpf, i);
-//            tpf = adjustTpf(tpf, i);
+            tpf = tpfOriginal;
+            checkMouseScrolling(i);
+            tpf = adjustTpf(tpf, i);
 
             switch (dir) {
                 case -1:
                     accelPeriod[i] = Util.clamp(-maxAccelPeriod[i], accelPeriod[i] - tpf, accelPeriod[i]);
                     break;
                 case 0:
-                    if (accelPeriod[i] != 0) {
-                        double oldSpeed = accelPeriod[i];
-                        if (accelPeriod[i] > 0) {
-                            accelPeriod[i] -= tpf;
-                        }
-                        else {
-                            accelPeriod[i] += tpf;
-                        }
-                        if (oldSpeed * accelPeriod[i] < 0) {
-                            accelPeriod[i] = 0;
-                        }
-                    }
+                    accelPeriod[i] = 0;
                     break;
                 case 1:
                     accelPeriod[i] = Util.clamp(accelPeriod[i], accelPeriod[i] + tpf, maxAccelPeriod[i]);
@@ -150,21 +155,21 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
 
         distance += maxSpeed[DISTANCE] * accelPeriod[DISTANCE] * tpf;
         tilt += maxSpeed[TILT] * accelPeriod[TILT] * tpf;
-        rot += maxSpeed[ROTATE] * accelPeriod[ROTATE] * tpf;
+        rotate += maxSpeed[ROTATE] * accelPeriod[ROTATE] * tpf;
 
         distance = Util.clamp(minValue[DISTANCE], distance, maxValue[DISTANCE]);
-        rot = Util.clamp(minValue[ROTATE], rot, maxValue[ROTATE]);
+        rotate = Util.clamp(minValue[ROTATE], rotate, maxValue[ROTATE]);
         tilt = Util.clamp(minValue[TILT], tilt, maxValue[TILT]);
 
         double offX = maxSpeed[SIDE] * accelPeriod[SIDE] * tpf;
         double offZ = maxSpeed[FWD] * accelPeriod[FWD] * tpf;
 
-        center.x += (float) (offX * Math.cos(-rot) + offZ * Math.sin(rot));
-        center.z += (float) (offX * Math.sin(-rot) + offZ * Math.cos(rot));
+        center.x += (float) (offX * Math.cos(-rotate) + offZ * Math.sin(rotate));
+        center.z += (float) (offX * Math.sin(-rotate) + offZ * Math.cos(rotate));
 
-        position.x = center.x + (float) (distance * Math.cos(tilt) * Math.sin(rot));
+        position.x = center.x + (float) (distance * Math.cos(tilt) * Math.sin(rotate));
         position.y = center.y + (float) (distance * Math.sin(tilt));
-        position.z = center.z + (float) (distance * Math.cos(tilt) * Math.cos(rot));
+        position.z = center.z + (float) (distance * Math.cos(tilt) * Math.cos(rotate));
 
         cam.setLocation(position);
         cam.lookAt(center, new Vector3f(0, 1, 0));
@@ -191,13 +196,13 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     private void checkLeftRightMovement() {
 
         if (inputManager.getCursorPosition().x < 20) {
-            direction[Degree.SIDE.ordinal()] = 1;
+            direction[SIDE] = 1;
         }
         else if (inputManager.getCursorPosition().x > cam.getWidth() - 20) {
-            direction[Degree.SIDE.ordinal()] = -1;
+            direction[SIDE] = -1;
         }
         else {
-            direction[Degree.SIDE.ordinal()] = 0;
+            direction[SIDE] = 0;
         }
     }
 
@@ -207,38 +212,41 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     private void checkUpDownMovement() {
 
         if (inputManager.getCursorPosition().y < 20) {
-            direction[Degree.FWD.ordinal()] = 1;
+            direction[FWD] = 1;
         }
         else if (inputManager.getCursorPosition().y > cam.getHeight() - 20) {
-            direction[Degree.FWD.ordinal()] = -1;
+            direction[FWD] = -1;
         }
         else {
-            direction[Degree.FWD.ordinal()] = 0;
+            direction[FWD] = 0;
         }
     }
 
     /**
      * Resets the flag for changing the position, so that one mouse wheel scroll is stopped again.
      */
-    private float checkMouseScrolling(float tpf, int i) {
+    private void checkMouseScrolling(int i) {
 
         // If we scroll with the mouse wheel, no onAction is fired for a stop scrolling.
         // So we scroll a certain amount and stop manually by setting the direction to 0.
-        if (i == Degree.DISTANCE.ordinal()) {
-            tpf = 5 * tpf;
+        if (i == DISTANCE) {
             direction[i] = 0;
         }
-
-        return tpf;
     }
 
+    /**
+     * Some movement should be with different speed.
+     */
     private float adjustTpf(float tpf, int i) {
 
-        if (i == Degree.TILT.ordinal()) {
+        if (i == DISTANCE) {
+            return tpf * 10;
+        }
+        if (i == TILT) {
             return tpf / 2;
         }
-        else if (i == Degree.ROTATE.ordinal()) {
-            return tpf / 2;
+        else if (i == ROTATE) {
+            return tpf / 10;
         }
         else {
             return tpf;
@@ -266,36 +274,17 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     @Override
     public void onAction(String name, boolean isPressed, float tpf) {
 
-        if (checkMouseMiddleButton(name, isPressed)) {
-            return;
-        }
-
-        int press = isPressed ? 1 : 0;
-
-        char sign = name.charAt(0);
-        if (sign == '-') {
-            press = -press;
-        }
-        else if (sign != '+') {
-            return;
-        }
-
-        Degree deg = Degree.valueOf(name.substring(1));
-        direction[deg.ordinal()] = press;
-    }
-
-    /**
-     * Checks if the middle mouse button has been clicked. If so, the flag is set and true is returned.
-     */
-    private boolean checkMouseMiddleButton(String name, boolean isPressed) {
-
-        if ("MIDDLECLICK".equals(name)) {
-
+        if (MOUSE_MIDDLE.equals(name)) {
             middleMouseButtonClicked = isPressed;
-            return true;
+            return;
         }
 
-        return false;
+        if (BACK.equals(name)) {
+            direction[DISTANCE] = -1;
+        }
+        else if (FORWARD.equals(name)) {
+            direction[DISTANCE] = 1;
+        }
     }
 
     /**
@@ -305,23 +294,23 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     public void onAnalog(String name, float value, float tpf) {
 
         if (middleMouseButtonClicked) {
-            if (name.equals("Right")) {
-                direction[Degree.ROTATE.ordinal()] = 1;
+            if (name.equals(UP)) {
+                direction[TILT] = 1;
             }
-            else if (name.equals("Left")) {
-                direction[Degree.ROTATE.ordinal()] = -1;
+            else if (name.equals(DOWN)) {
+                direction[TILT] = -1;
             }
 
-            if (name.equals("Up")) {
-                direction[Degree.TILT.ordinal()] = 1;
+            if (name.equals(RIGHT)) {
+                direction[ROTATE] = 1;
             }
-            else if (name.equals("Down")) {
-                direction[Degree.TILT.ordinal()] = -1;
+            else if (name.equals(LEFT)) {
+                direction[ROTATE] = -1;
             }
         }
         else {
-            direction[Degree.ROTATE.ordinal()] = 0;
-            direction[Degree.TILT.ordinal()] = 0;
+            direction[ROTATE] = 0;
+            direction[TILT] = 0;
         }
     }
 }
