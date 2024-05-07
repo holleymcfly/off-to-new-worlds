@@ -3,11 +3,8 @@ package de.herrmann.holger.offtonewworlds;
 import com.jme3.export.JmeExporter;
 import com.jme3.export.JmeImporter;
 import com.jme3.input.InputManager;
-import com.jme3.input.KeyInput;
 import com.jme3.input.MouseInput;
-import com.jme3.input.controls.ActionListener;
-import com.jme3.input.controls.KeyTrigger;
-import com.jme3.input.controls.MouseAxisTrigger;
+import com.jme3.input.controls.*;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.RenderManager;
@@ -16,7 +13,7 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.control.Control;
 import de.herrmann.holger.offtonewworlds.util.Util;
 
-public class RtsCamera implements Control, ActionListener {
+public class RtsCamera implements Control, ActionListener, AnalogListener {
 
     public enum Degree {
         SIDE,
@@ -50,6 +47,8 @@ public class RtsCamera implements Control, ActionListener {
     private static final int TILT = Degree.TILT.ordinal();
     private static final int DISTANCE = Degree.DISTANCE.ordinal();
 
+    private boolean middleMouseButtonClicked = false;
+
     public RtsCamera(Camera cam, Spatial target) {
         this.cam = cam;
 
@@ -77,18 +76,20 @@ public class RtsCamera implements Control, ActionListener {
     public void registerWithInput(InputManager inputManager) {
         this.inputManager = inputManager;
 
-        String[] mappings = new String[]{"+ROTATE", "+TILT", "+DISTANCE", "-ROTATE", "-TILT", "-DISTANCE",};
+        inputManager.setCursorVisible(true);
 
-        inputManager.addMapping("+ROTATE", new KeyTrigger(KeyInput.KEY_Q));
-        inputManager.addMapping("-ROTATE", new KeyTrigger(KeyInput.KEY_E));
-        inputManager.addMapping("+TILT", new KeyTrigger(KeyInput.KEY_R));
-        inputManager.addMapping("-TILT", new KeyTrigger(KeyInput.KEY_F));
+        String[] mappings = new String[]{"+DISTANCE", "-DISTANCE", "MIDDLECLICK"};
 
         inputManager.addMapping("-DISTANCE", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
         inputManager.addMapping("+DISTANCE", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, true));
-
+        inputManager.addMapping("MIDDLECLICK", new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE));
         inputManager.addListener(this, mappings);
-        inputManager.setCursorVisible(true);
+
+        inputManager.addMapping("Left", new MouseAxisTrigger(MouseInput.AXIS_X, true));
+        inputManager.addMapping("Right", new MouseAxisTrigger(MouseInput.AXIS_X, false));
+        inputManager.addMapping("Up", new MouseAxisTrigger(MouseInput.AXIS_Y, true));
+        inputManager.addMapping("Down", new MouseAxisTrigger(MouseInput.AXIS_Y, false));
+        inputManager.addListener(this, "Left", "Right", "Up", "Down");
     }
 
     @Override
@@ -121,6 +122,7 @@ public class RtsCamera implements Control, ActionListener {
             int dir = direction[i];
 
             tpf = checkMouseScrolling(tpf, i);
+//            tpf = adjustTpf(tpf, i);
 
             switch (dir) {
                 case -1:
@@ -164,13 +166,6 @@ public class RtsCamera implements Control, ActionListener {
         position.y = center.y + (float) (distance * Math.sin(tilt));
         position.z = center.z + (float) (distance * Math.cos(tilt) * Math.cos(rot));
 
-        System.out.println("Position: " + position);
-        System.out.println("Center: " + center);
-        System.out.println("Distance: " + distance);
-        System.out.println("Tilt: " + tilt);
-        System.out.println("Rot: " + rot);
-
-
         cam.setLocation(position);
         cam.lookAt(center, new Vector3f(0, 1, 0));
     }
@@ -198,7 +193,7 @@ public class RtsCamera implements Control, ActionListener {
         if (inputManager.getCursorPosition().x < 20) {
             direction[Degree.SIDE.ordinal()] = 1;
         }
-        else if (inputManager.getCursorPosition().x > cam.getWidth()-20) {
+        else if (inputManager.getCursorPosition().x > cam.getWidth() - 20) {
             direction[Degree.SIDE.ordinal()] = -1;
         }
         else {
@@ -214,7 +209,7 @@ public class RtsCamera implements Control, ActionListener {
         if (inputManager.getCursorPosition().y < 20) {
             direction[Degree.FWD.ordinal()] = 1;
         }
-        else if (inputManager.getCursorPosition().y > cam.getHeight()-20) {
+        else if (inputManager.getCursorPosition().y > cam.getHeight() - 20) {
             direction[Degree.FWD.ordinal()] = -1;
         }
         else {
@@ -237,6 +232,19 @@ public class RtsCamera implements Control, ActionListener {
         return tpf;
     }
 
+    private float adjustTpf(float tpf, int i) {
+
+        if (i == Degree.TILT.ordinal()) {
+            return tpf / 2;
+        }
+        else if (i == Degree.ROTATE.ordinal()) {
+            return tpf / 2;
+        }
+        else {
+            return tpf;
+        }
+    }
+
     // SIDE and FWD min/max values are ignored
     public void setMinMaxValues(Degree dg, float min, float max) {
         minValue[dg.ordinal()] = min;
@@ -252,8 +260,16 @@ public class RtsCamera implements Control, ActionListener {
 
     }
 
+    /**
+     * Handles the action input mappings (mouse button, mouse wheel).
+     */
     @Override
     public void onAction(String name, boolean isPressed, float tpf) {
+
+        if (checkMouseMiddleButton(name, isPressed)) {
+            return;
+        }
+
         int press = isPressed ? 1 : 0;
 
         char sign = name.charAt(0);
@@ -266,5 +282,46 @@ public class RtsCamera implements Control, ActionListener {
 
         Degree deg = Degree.valueOf(name.substring(1));
         direction[deg.ordinal()] = press;
+    }
+
+    /**
+     * Checks if the middle mouse button has been clicked. If so, the flag is set and true is returned.
+     */
+    private boolean checkMouseMiddleButton(String name, boolean isPressed) {
+
+        if ("MIDDLECLICK".equals(name)) {
+
+            middleMouseButtonClicked = isPressed;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Handles the analog input mappings (mouse movement).
+     */
+    @Override
+    public void onAnalog(String name, float value, float tpf) {
+
+        if (middleMouseButtonClicked) {
+            if (name.equals("Right")) {
+                direction[Degree.ROTATE.ordinal()] = 1;
+            }
+            else if (name.equals("Left")) {
+                direction[Degree.ROTATE.ordinal()] = -1;
+            }
+
+            if (name.equals("Up")) {
+                direction[Degree.TILT.ordinal()] = 1;
+            }
+            else if (name.equals("Down")) {
+                direction[Degree.TILT.ordinal()] = -1;
+            }
+        }
+        else {
+            direction[Degree.ROTATE.ordinal()] = 0;
+            direction[Degree.TILT.ordinal()] = 0;
+        }
     }
 }
