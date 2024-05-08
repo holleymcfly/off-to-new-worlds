@@ -34,13 +34,22 @@ public class OffToNewWorlds extends SimpleApplication {
 
     private void initWorld() {
 
-        Spatial grass = assetManager.loadModel("assets/ground/grass.glb");
-        grass.move(new Vector3f(0, 0, 0));
-        rootNode.attachChild(grass);
+        Spatial building = assetManager.loadModel("assets/ground/Building.glb");
+        building.move(new Vector3f(0, 0, 0));
+        rootNode.attachChild(building);
 
-        Spatial grass2 = assetManager.loadModel("assets/ground/grass.glb");
-        grass2.move(new Vector3f(2.0f, 0, 0));
-        rootNode.attachChild(grass2);
+        for (int j=0; j<100; j++) {
+            for (int i = 0; i < 100; i++) {
+                double rand = Math.random();
+                String grassSource = "assets/ground/grass.glb";
+                if (rand < 0.5) {
+                    grassSource = "assets/ground/grass2.glb";
+                }
+                Spatial newGrass = assetManager.loadModel(grassSource);
+                newGrass.move(new Vector3f(i*2f, 0, j*2f));
+                rootNode.attachChild(newGrass);
+            }
+        }
     }
 
     private void initLight() {
