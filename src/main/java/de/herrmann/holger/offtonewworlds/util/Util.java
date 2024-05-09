@@ -1,5 +1,8 @@
 package de.herrmann.holger.offtonewworlds.util;
 
+import java.lang.management.ManagementFactory;
+import java.util.regex.Pattern;
+
 public class Util {
 
     /**
@@ -11,5 +14,19 @@ public class Util {
             return min;
         }
         else return Math.min(value, max);
+    }
+
+    /**
+     * Checks if the code is running in debug mode.
+     */
+    public static boolean isDebugging() {
+
+        Pattern debugPattern = Pattern.compile("-Xdebug|jdwp");
+        for (String arg : ManagementFactory.getRuntimeMXBean().getInputArguments()) {
+            if (debugPattern.matcher(arg).find()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

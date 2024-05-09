@@ -1,14 +1,24 @@
 package de.herrmann.holger.offtonewworlds;
 
+import com.jme3.asset.AssetManager;
+import com.jme3.collision.CollisionResult;
+import com.jme3.collision.CollisionResults;
 import com.jme3.export.JmeExporter;
 import com.jme3.export.JmeImporter;
 import com.jme3.input.InputManager;
 import com.jme3.input.MouseInput;
-import com.jme3.input.controls.*;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.AnalogListener;
+import com.jme3.input.controls.MouseAxisTrigger;
+import com.jme3.input.controls.MouseButtonTrigger;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.Control;
 import de.herrmann.holger.offtonewworlds.util.Util;
@@ -31,6 +41,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
 
     private InputManager inputManager;
     private final Camera cam;
+    private final Spatial target;
 
     private final int[] direction = new int[5];
     private final float[] accelPeriod = new float[5];
@@ -60,11 +71,16 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     private final String LEFT = "Left";
     private final String RIGHT = "Rigjt";
     private final String MOUSE_MIDDLE = "MouseMiddleClick";
+    private final String MOUSE_LEFT_CLICK = "MouseLeftClick";
     private final String UP = "Up";
     private final String DOWN = "DOWN";
 
-    public RtsCamera(Camera cam, Spatial target) {
+    private final AssetManager assetManager;
+
+    public RtsCamera(Camera cam, Spatial target, AssetManager assetManager) {
         this.cam = cam;
+        this.target = target;
+        this.assetManager = assetManager;
 
         setMinMaxValues(Degree.SIDE, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
         setMinMaxValues(Degree.FWD, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
@@ -96,7 +112,8 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
         inputManager.addMapping(BACK, new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
         inputManager.addMapping(FORWARD, new MouseAxisTrigger(MouseInput.AXIS_WHEEL, true));
         inputManager.addMapping(MOUSE_MIDDLE, new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE));
-        inputManager.addListener(this, FORWARD, BACK, MOUSE_MIDDLE);
+        inputManager.addMapping(MOUSE_LEFT_CLICK, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+        inputManager.addListener(this, FORWARD, BACK, MOUSE_MIDDLE, MOUSE_LEFT_CLICK);
 
         inputManager.addMapping(LEFT, new MouseAxisTrigger(MouseInput.AXIS_X, true));
         inputManager.addMapping(RIGHT, new MouseAxisTrigger(MouseInput.AXIS_X, false));
@@ -115,7 +132,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
 
     @Override
     public Control cloneForSpatial(Spatial spatial) {
-        RtsCamera other = new RtsCamera(cam, spatial);
+        RtsCamera other = new RtsCamera(cam, spatial, assetManager);
         other.registerWithInput(inputManager);
         return other;
     }
@@ -195,10 +212,10 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
      */
     private void checkLeftRightMovement() {
 
-        if (inputManager.getCursorPosition().x < 20) {
+        if (inputManager.getCursorPosition().x > cam.getWidth() - 20) {
             direction[SIDE] = 1;
         }
-        else if (inputManager.getCursorPosition().x > cam.getWidth() - 20) {
+        else if (inputManager.getCursorPosition().x < 20) {
             direction[SIDE] = -1;
         }
         else {
@@ -274,6 +291,11 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     @Override
     public void onAction(String name, boolean isPressed, float tpf) {
 
+        if (MOUSE_LEFT_CLICK.equals(name) && !isPressed) {
+
+            handleMouseClick();
+        }
+
         if (MOUSE_MIDDLE.equals(name)) {
             middleMouseButtonClicked = isPressed;
             return;
@@ -284,6 +306,27 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
         }
         else if (FORWARD.equals(name)) {
             direction[DISTANCE] = 1;
+        }
+    }
+
+    private void handleMouseClick() {
+
+        CollisionResults results = new CollisionResults();
+        Ray ray = new Ray(cam.getLocation(), cam.getDirection());
+        target.collideWith(ray, results);
+        if (results.size() > 0) {
+
+            CollisionResult closest = results.getClosestCollision();
+            Geometry g = closest.getGeometry();
+
+            UserData tileInfo = g.getUserData("userData");
+            System.out.println(tileInfo);
+
+            // Temp: change color of the hidden tile.
+            Material mat = new Material(assetManager,"assets/Unshaded.j3md");
+            mat.setColor("Color", ColorRGBA.randomColor());
+            g.setMaterial(mat);
+            // ------- end temp
         }
     }
 
