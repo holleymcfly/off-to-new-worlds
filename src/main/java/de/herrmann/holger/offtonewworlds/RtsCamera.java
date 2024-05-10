@@ -14,6 +14,7 @@ import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Ray;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.RenderManager;
@@ -312,7 +313,11 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     private void handleMouseClick() {
 
         CollisionResults results = new CollisionResults();
-        Ray ray = new Ray(cam.getLocation(), cam.getDirection());
+        Vector2f click2d = inputManager.getCursorPosition();
+        Vector3f click3d = cam.getWorldCoordinates(click2d, 0);
+        Vector3f dir = cam.getWorldCoordinates(click2d, 1).subtractLocal(click3d);
+        Ray ray = new Ray(click3d, dir);
+
         target.collideWith(ray, results);
         if (results.size() > 0) {
 
