@@ -40,6 +40,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
         DISTANCE
     }
 
+    private final ColorRGBA backgroundColor = new ColorRGBA(0.6f, 0.92549f, 1f, 1f);
     private InputManager inputManager;
     private final Camera cam;
     private final Spatial target;
@@ -283,7 +284,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
 
     @Override
     public void render(RenderManager rm, ViewPort vp) {
-
+        vp.setBackgroundColor(backgroundColor);
     }
 
     /**
