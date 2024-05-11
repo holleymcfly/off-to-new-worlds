@@ -22,6 +22,7 @@ import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.Control;
+import de.herrmann.holger.offtonewworlds.model.TileInfo;
 import de.herrmann.holger.offtonewworlds.util.Util;
 
 /**
@@ -325,7 +326,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
             CollisionResult closest = results.getClosestCollision();
             Geometry g = closest.getGeometry();
 
-            UserData tileInfo = g.getUserData("userData");
+            TileInfo tileInfo = g.getUserData("userData");
             System.out.println(tileInfo);
 
             // Temp: change color of the hidden tile.

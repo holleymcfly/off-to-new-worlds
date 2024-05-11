@@ -1,14 +1,14 @@
-package de.herrmann.holger.offtonewworlds.menu;
+package de.herrmann.holger.offtonewworlds.dialogs.buildingdialog;
 
 import de.lessvoid.nifty.builder.*;
 
 import javax.annotation.Nonnull;
 
-public class TopLeftMenuDialog extends ScreenBuilder {
+public class BuildingDialog extends ScreenBuilder {
 
-    public TopLeftMenuDialog(@Nonnull String id) {
+    public BuildingDialog(@Nonnull String id) {
         super(id);
-        controller(new TopLeftMenuController());
+        controller(new BuildingDialogController());
         buildUserInterface();
     }
 

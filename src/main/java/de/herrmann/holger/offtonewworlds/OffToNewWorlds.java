@@ -9,8 +9,9 @@ import com.jme3.light.DirectionalLight;
 import com.jme3.math.Vector3f;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.scene.Node;
-import de.herrmann.holger.offtonewworlds.menu.TopLeftMenuDialog;
-import de.herrmann.holger.offtonewworlds.model.TileType;
+import de.herrmann.holger.offtonewworlds.dialogs.topleftmenu.TopLeftMenu;
+import de.herrmann.holger.offtonewworlds.model.building.BuildingInfo;
+import de.herrmann.holger.offtonewworlds.model.ground.GrassInfo;
 import de.herrmann.holger.offtonewworlds.settings.OffToNewWorldsSettings;
 import de.herrmann.holger.offtonewworlds.util.Util;
 import de.lessvoid.nifty.Nifty;
@@ -47,7 +48,7 @@ public class OffToNewWorlds extends SimpleApplication {
 
         Node building = (Node) assetManager.loadModel("assets/ground/Building.glb");
         building.move(new Vector3f(0, 0, 0));
-        addUserDataToNode(building, "userData", new UserData(0, 0, 0, TileType.Building));
+        addUserDataToNode(building, "userData", new BuildingInfo(0, 0, 0));
         rootNode.attachChild(building);
 
         for (int j = 0; j < 100; j++) {
@@ -59,7 +60,7 @@ public class OffToNewWorlds extends SimpleApplication {
                 }
                 Node newGrass = (Node) assetManager.loadModel(grassSource);
                 newGrass.move(new Vector3f(i * 2f, 0, j * 2f));
-                addUserDataToNode(newGrass, "userData", new UserData(i * 2f, 0, j * 2f, TileType.Grass));
+                addUserDataToNode(newGrass, "userData", new GrassInfo(i * 2f, 0, j * 2f));
                 rootNode.attachChild(newGrass);
             }
         }
@@ -85,7 +86,7 @@ public class OffToNewWorlds extends SimpleApplication {
                 guiViewPort);
         Nifty nifty = niftyDisplay.getNifty();
 
-        nifty.addScreen("start", new TopLeftMenuDialog("start").build(nifty));
+        nifty.addScreen("start", new TopLeftMenu("start").build(nifty));
         nifty.gotoScreen("start");
 
         guiViewPort.addProcessor(niftyDisplay);
