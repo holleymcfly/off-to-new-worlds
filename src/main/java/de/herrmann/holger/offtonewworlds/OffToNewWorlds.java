@@ -7,11 +7,13 @@ import com.jme3.app.state.ConstantVerifierState;
 import com.jme3.audio.AudioListenerState;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.Vector3f;
+import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.scene.Node;
-import com.jme3.ui.Picture;
+import de.herrmann.holger.offtonewworlds.menu.TopLeftMenuDialog;
 import de.herrmann.holger.offtonewworlds.model.TileType;
 import de.herrmann.holger.offtonewworlds.settings.OffToNewWorldsSettings;
 import de.herrmann.holger.offtonewworlds.util.Util;
+import de.lessvoid.nifty.Nifty;
 
 public class OffToNewWorlds extends SimpleApplication {
 
@@ -33,9 +35,12 @@ public class OffToNewWorlds extends SimpleApplication {
     public void simpleInitApp() {
 
         initWorld();
-        initHeadUpDisplays();
+        initTopLeftMenu();
         initLight();
         initCamera();
+
+        setDisplayFps(false);
+        setDisplayStatView(false);
     }
 
     private void initWorld() {
@@ -45,7 +50,7 @@ public class OffToNewWorlds extends SimpleApplication {
         addUserDataToNode(building, "userData", new UserData(0, 0, 0, TileType.Building));
         rootNode.attachChild(building);
 
-        for (int j=0; j<100; j++) {
+        for (int j = 0; j < 100; j++) {
             for (int i = 0; i < 100; i++) {
                 double rand = Math.random();
                 String grassSource = "assets/ground/grass.glb";
@@ -53,8 +58,8 @@ public class OffToNewWorlds extends SimpleApplication {
                     grassSource = "assets/ground/grass2.glb";
                 }
                 Node newGrass = (Node) assetManager.loadModel(grassSource);
-                newGrass.move(new Vector3f(i*2f, 0, j*2f));
-                addUserDataToNode(newGrass, "userData", new UserData(i*2f, 0, j*2f, TileType.Grass));
+                newGrass.move(new Vector3f(i * 2f, 0, j * 2f));
+                addUserDataToNode(newGrass, "userData", new UserData(i * 2f, 0, j * 2f, TileType.Grass));
                 rootNode.attachChild(newGrass);
             }
         }
@@ -66,7 +71,7 @@ public class OffToNewWorlds extends SimpleApplication {
      */
     private void addUserDataToNode(Node node, String key, Object data) {
 
-        for (int i=0; i<node.getChildren().size(); i++) {
+        for (int i = 0; i < node.getChildren().size(); i++) {
             node.getChild(i).setUserData(key, data);
             if (node.getChild(i) instanceof Node) {
                 addUserDataToNode((Node) node.getChild(i), key, data);
@@ -74,17 +79,16 @@ public class OffToNewWorlds extends SimpleApplication {
         }
     }
 
-    private void initHeadUpDisplays() {
+    private void initTopLeftMenu() {
 
-        setDisplayStatView(false);
-        setDisplayFps(false);
+        NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(assetManager, inputManager, audioRenderer,
+                guiViewPort);
+        Nifty nifty = niftyDisplay.getNifty();
 
-        Picture pic = new Picture("Build menu");
-        pic.setImage(assetManager, "assets/icons/button_menu_building.png", true);
-        pic.setWidth(64);
-        pic.setHeight(64);
-        pic.setPosition(10f, settings.getHeight() - 74);
-        guiNode.attachChild(pic);
+        nifty.addScreen("start", new TopLeftMenuDialog("start").build(nifty));
+        nifty.gotoScreen("start");
+
+        guiViewPort.addProcessor(niftyDisplay);
     }
 
     private void initLight() {
@@ -98,6 +102,6 @@ public class OffToNewWorlds extends SimpleApplication {
 
         final RtsCamera rtsCamera = new RtsCamera(cam, rootNode, assetManager);
         rtsCamera.registerWithInput(inputManager);
-        rtsCamera.setCenter(new Vector3f(0,0f,0));
+        rtsCamera.setCenter(new Vector3f(0, 0f, 0));
     }
 }
