@@ -4,6 +4,7 @@ import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import de.herrmann.holger.offtonewworlds.OffToNewWorlds;
 import de.herrmann.holger.offtonewworlds.dialogs.DialogId;
+import de.herrmann.holger.offtonewworlds.model.TileType;
 import de.herrmann.holger.offtonewworlds.util.Util;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.screen.Screen;
@@ -56,5 +57,15 @@ public class BuildingDialogController extends BaseAppState implements ScreenCont
 
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "groundSelection", false);
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "buildingSelection", true);
+    }
+
+    /**
+     * Sets the selected tile type as "to build tile", so that the camera can replace the tile of the screen
+     * temporarily with the tile to be built.
+     */
+    @SuppressWarnings("unused")
+    public void selectTile(String buildInfo) {
+        application.setTileToBeBuilt(TileType.valueOf(buildInfo));
+        Util.removeScreenById(application, DialogId.BuildingDialog.name());
     }
 }

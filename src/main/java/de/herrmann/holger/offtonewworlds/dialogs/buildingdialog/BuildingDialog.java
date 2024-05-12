@@ -102,7 +102,7 @@ public class BuildingDialog extends ScreenBuilder {
                                 height("32px");
                                 width("64px");
                                 visibleToMouse(true);
-                                interactOnClick("selectTile(\"PathLeftToRight\")");
+                                interactOnClick("selectTile(PathLeftToRight)");
                             }});
 
                             text(new TextBuilder() {{

@@ -9,9 +9,14 @@ public abstract class TileInfo implements Savable {
     private final TileType type;
     private final String filename;
 
-    private final float x;
-    private final float y;
-    private final float z;
+    private float x;
+    private float y;
+    private float z;
+
+    public TileInfo(TileType type, String filename) {
+        this.type = type;
+        this.filename = filename;
+    }
 
     public TileInfo(TileType type, String filename, float x, float y, float z) {
         this.type = type;
@@ -35,6 +40,10 @@ public abstract class TileInfo implements Savable {
 
     public TileType getType() {
         return type;
+    }
+
+    public String getFilename() {
+        return filename;
     }
 
     @Override

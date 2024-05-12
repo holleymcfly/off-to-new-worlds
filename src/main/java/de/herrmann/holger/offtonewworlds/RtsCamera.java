@@ -33,6 +33,8 @@ import de.herrmann.holger.offtonewworlds.util.Util;
  */
 public class RtsCamera implements Control, ActionListener, AnalogListener {
 
+    private final OffToNewWorlds application;
+
     public enum Degree {
         SIDE,
         FWD,
@@ -80,10 +82,11 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
 
     private final AssetManager assetManager;
 
-    public RtsCamera(Camera cam, Spatial target, AssetManager assetManager) {
+    public RtsCamera(Camera cam, Spatial target, AssetManager assetManager, OffToNewWorlds application) {
         this.cam = cam;
         this.target = target;
         this.assetManager = assetManager;
+        this.application = application;
 
         setMinMaxValues(Degree.SIDE, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
         setMinMaxValues(Degree.FWD, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
@@ -135,7 +138,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
 
     @Override
     public Control cloneForSpatial(Spatial spatial) {
-        RtsCamera other = new RtsCamera(cam, spatial, assetManager);
+        RtsCamera other = new RtsCamera(cam, spatial, assetManager, application);
         other.registerWithInput(inputManager);
         return other;
     }
@@ -295,7 +298,6 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     public void onAction(String name, boolean isPressed, float tpf) {
 
         if (MOUSE_LEFT_CLICK.equals(name) && !isPressed) {
-
             handleMouseClick();
         }
 
@@ -314,17 +316,8 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
 
     private void handleMouseClick() {
 
-        CollisionResults results = new CollisionResults();
-        Vector2f click2d = inputManager.getCursorPosition();
-        Vector3f click3d = cam.getWorldCoordinates(click2d, 0);
-        Vector3f dir = cam.getWorldCoordinates(click2d, 1).subtractLocal(click3d);
-        Ray ray = new Ray(click3d, dir);
-
-        target.collideWith(ray, results);
-        if (results.size() > 0) {
-
-            CollisionResult closest = results.getClosestCollision();
-            Geometry g = closest.getGeometry();
+        Geometry g = getHitTile();
+        if (g != null) {
 
             TileInfo tileInfo = g.getUserData("userData");
             System.out.println(tileInfo);
@@ -335,6 +328,24 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
             g.setMaterial(mat);
             // ------- end temp
         }
+    }
+
+    private Geometry getHitTile() {
+
+        CollisionResults results = new CollisionResults();
+        Vector2f click2d = inputManager.getCursorPosition();
+        Vector3f click3d = cam.getWorldCoordinates(click2d, 0);
+        Vector3f dir = cam.getWorldCoordinates(click2d, 1).subtractLocal(click3d);
+        Ray ray = new Ray(click3d, dir);
+
+        target.collideWith(ray, results);
+        if (results.size() > 0) {
+
+            CollisionResult closest = results.getClosestCollision();
+            return closest.getGeometry();
+        }
+
+        return null;
     }
 
     /**
@@ -356,6 +367,12 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
             }
             else if (name.equals(LEFT)) {
                 direction[ROTATE] = -1;
+            }
+        }
+        else if (application.isTileToBeBuilt()) {
+            Geometry g = getHitTile();
+            if (g != null) {
+                application.showTileToBeBuilt(g);
             }
         }
         else {

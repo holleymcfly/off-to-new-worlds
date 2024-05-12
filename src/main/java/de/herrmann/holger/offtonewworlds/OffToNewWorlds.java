@@ -8,9 +8,13 @@ import com.jme3.audio.AudioListenerState;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.Vector3f;
 import com.jme3.niftygui.NiftyJmeDisplay;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import de.herrmann.holger.offtonewworlds.dialogs.DialogId;
 import de.herrmann.holger.offtonewworlds.dialogs.topleftmenu.TopLeftMenu;
+import de.herrmann.holger.offtonewworlds.model.TileInfo;
+import de.herrmann.holger.offtonewworlds.model.TileType;
+import de.herrmann.holger.offtonewworlds.model.TileUtil;
 import de.herrmann.holger.offtonewworlds.model.building.BuildingInfo;
 import de.herrmann.holger.offtonewworlds.model.ground.GrassInfo;
 import de.herrmann.holger.offtonewworlds.settings.OffToNewWorldsSettings;
@@ -18,6 +22,10 @@ import de.herrmann.holger.offtonewworlds.util.Util;
 import de.lessvoid.nifty.Nifty;
 
 public class OffToNewWorlds extends SimpleApplication {
+
+    // Set when the user selects a tile from the building menu.
+    private TileType tileToBeBuilt = null;
+    private TileInfo temporarilyReplacedTile = null;
 
     public static void main(String[] args) {
 
@@ -103,8 +111,37 @@ public class OffToNewWorlds extends SimpleApplication {
 
     private void initCamera() {
 
-        final RtsCamera rtsCamera = new RtsCamera(cam, rootNode, assetManager);
+        final RtsCamera rtsCamera = new RtsCamera(cam, rootNode, assetManager, this);
         rtsCamera.registerWithInput(inputManager);
         rtsCamera.setCenter(new Vector3f(0, 0f, 0));
+    }
+
+    public void setTileToBeBuilt(TileType tileToBeBuilt) {
+        this.tileToBeBuilt = tileToBeBuilt;
+    }
+
+    public boolean isTileToBeBuilt() {
+        return tileToBeBuilt != null;
+    }
+
+    /**
+     * Creates the tile to be built and replaces it at the position of the given geometry.
+     */
+    public void showTileToBeBuilt(Geometry g) {
+
+        temporarilyReplacedTile = g.getUserData("userData");
+        rootNode.detachChild(g);
+
+        TileInfo tileInfo = TileUtil.getTileInfoForType(tileToBeBuilt);
+        if (tileInfo == null) {
+            return;
+        }
+
+        Node building = (Node) assetManager.loadModel(tileInfo.getFilename());
+        building.move(new Vector3f(temporarilyReplacedTile.getX(), temporarilyReplacedTile.getY(),
+                temporarilyReplacedTile.getZ()));
+        addUserDataToNode(building, "userData", new BuildingInfo(temporarilyReplacedTile.getX(),
+                temporarilyReplacedTile.getY(), temporarilyReplacedTile.getZ()));
+        rootNode.attachChild(building);
     }
 }

@@ -94,4 +94,24 @@ public class Util {
             element.setVisible(visible);
         }
     }
+
+    /**
+     * Returns the screen with the given id.
+     */
+    public static void removeScreenById(OffToNewWorlds application, String screenId) {
+
+        SafeArrayList<SceneProcessor> processors = application.getGuiViewPort().getProcessors();
+        for (SceneProcessor processor : processors) {
+
+            if (!(processor instanceof NiftyJmeDisplay)) {
+                continue;
+            }
+
+            Screen screen = ((NiftyJmeDisplay) processor).getNifty().getScreen(screenId);
+            if (screen != null) {
+                application.getGuiViewPort().removeProcessor(processor);
+                return;
+            }
+        }
+    }
 }
