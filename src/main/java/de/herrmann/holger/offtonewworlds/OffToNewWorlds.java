@@ -25,7 +25,8 @@ public class OffToNewWorlds extends SimpleApplication {
 
     // Set when the user selects a tile from the building menu.
     private TileType tileToBeBuilt = null;
-    private TileInfo temporarilyReplacedTile = null;
+    private Geometry temporarilyReplacedTile = null;
+    private Node previewTile = null;
 
     public static void main(String[] args) {
 
@@ -81,6 +82,8 @@ public class OffToNewWorlds extends SimpleApplication {
      */
     private void addUserDataToNode(Node node, String key, Object data) {
 
+        node.setUserData(key, data);
+
         for (int i = 0; i < node.getChildren().size(); i++) {
             node.getChild(i).setUserData(key, data);
             if (node.getChild(i) instanceof Node) {
@@ -129,7 +132,20 @@ public class OffToNewWorlds extends SimpleApplication {
      */
     public void showTileToBeBuilt(Geometry g) {
 
-        temporarilyReplacedTile = g.getUserData("userData");
+        TileInfo temporarilyReplacedTileInfo = g.getUserData("userData");
+
+        if (previewTile != null) {
+            TileInfo previewTileInfo = previewTile.getUserData("userData");
+            if (previewTileInfo.getX() == temporarilyReplacedTileInfo.getX() &&
+                previewTileInfo.getY() == temporarilyReplacedTileInfo.getY() &&
+                previewTileInfo.getZ() == temporarilyReplacedTileInfo.getZ()) {
+                return;
+            }
+        }
+
+        replacePreviousPreview();
+
+        temporarilyReplacedTile = g;
         rootNode.detachChild(g);
 
         TileInfo tileInfo = TileUtil.getTileInfoForType(tileToBeBuilt);
@@ -137,11 +153,32 @@ public class OffToNewWorlds extends SimpleApplication {
             return;
         }
 
-        Node building = (Node) assetManager.loadModel(tileInfo.getFilename());
-        building.move(new Vector3f(temporarilyReplacedTile.getX(), temporarilyReplacedTile.getY(),
-                temporarilyReplacedTile.getZ()));
-        addUserDataToNode(building, "userData", new BuildingInfo(temporarilyReplacedTile.getX(),
-                temporarilyReplacedTile.getY(), temporarilyReplacedTile.getZ()));
-        rootNode.attachChild(building);
+        previewTile = (Node) assetManager.loadModel(tileInfo.getFilename());
+        previewTile.move(new Vector3f(temporarilyReplacedTileInfo.getX(), temporarilyReplacedTileInfo.getY(),
+                temporarilyReplacedTileInfo.getZ()));
+        tileInfo.setX(temporarilyReplacedTileInfo.getX());
+        tileInfo.setY(temporarilyReplacedTileInfo.getY());
+        tileInfo.setZ(temporarilyReplacedTileInfo.getZ());
+        addUserDataToNode(previewTile, "userData", tileInfo);
+        rootNode.attachChild(previewTile);
+    }
+
+    private void replacePreviousPreview() {
+
+        if (temporarilyReplacedTile == null || previewTile == null) {
+            return;
+        }
+
+        rootNode.detachChild(previewTile);
+
+        TileInfo tileInfo = temporarilyReplacedTile.getUserData("userData");
+        Node previousTile = (Node) assetManager.loadModel(tileInfo.getFilename());
+        previousTile.move(new Vector3f(tileInfo.getX(), tileInfo.getY(),
+                tileInfo.getZ()));
+        tileInfo.setX(tileInfo.getX());
+        tileInfo.setY(tileInfo.getY());
+        tileInfo.setZ(tileInfo.getZ());
+        addUserDataToNode(previousTile, "userData", tileInfo);
+        rootNode.attachChild(previousTile);
     }
 }

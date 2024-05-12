@@ -374,6 +374,9 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
             if (g != null) {
                 application.showTileToBeBuilt(g);
             }
+
+            direction[ROTATE] = 0;
+            direction[TILT] = 0;
         }
         else {
             direction[ROTATE] = 0;

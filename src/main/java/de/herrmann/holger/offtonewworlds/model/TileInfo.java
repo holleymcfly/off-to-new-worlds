@@ -26,6 +26,18 @@ public abstract class TileInfo implements Savable {
         this.z = z;
     }
 
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public void setZ(float z) {
+        this.z = z;
+    }
+
     public float getX() {
         return x;
     }
