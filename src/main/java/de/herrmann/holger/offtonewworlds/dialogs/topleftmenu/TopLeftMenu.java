@@ -1,14 +1,15 @@
 package de.herrmann.holger.offtonewworlds.dialogs.topleftmenu;
 
+import de.herrmann.holger.offtonewworlds.OffToNewWorlds;
 import de.lessvoid.nifty.builder.*;
 
 import javax.annotation.Nonnull;
 
 public class TopLeftMenu extends ScreenBuilder {
 
-    public TopLeftMenu(@Nonnull String id) {
+    public TopLeftMenu(@Nonnull String id, OffToNewWorlds application) {
         super(id);
-        controller(new TopLeftMenuController());
+        controller(new TopLeftMenuController(application));
         buildUserInterface();
     }
 
@@ -18,7 +19,7 @@ public class TopLeftMenu extends ScreenBuilder {
 
             childLayoutVertical();
 
-            panel(new PanelBuilder("panelTopMenu") {{
+            panel(new PanelBuilder("outerPanelTopMenu") {{
                 childLayoutCenter();
                 alignLeft();
                 valignTop();
@@ -28,8 +29,7 @@ public class TopLeftMenu extends ScreenBuilder {
                 height("110px");
                 width("300px");
 
-
-                panel(new PanelBuilder("panelTopMenu") {{
+                panel(new PanelBuilder("innerPanelTopMenu") {{
                     childLayoutCenter();
                     alignLeft();
                     valignTop();
@@ -49,7 +49,6 @@ public class TopLeftMenu extends ScreenBuilder {
                         interactOnClick("openBuildingMenu()");
                     }});
 
-                    // add text
                     text(new TextBuilder() {{
                         text("Baumenü");
                         marginLeft("10px");

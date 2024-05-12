@@ -1,5 +1,12 @@
 package de.herrmann.holger.offtonewworlds.util;
 
+import com.jme3.niftygui.NiftyJmeDisplay;
+import com.jme3.post.SceneProcessor;
+import com.jme3.util.SafeArrayList;
+import de.herrmann.holger.offtonewworlds.OffToNewWorlds;
+import de.lessvoid.nifty.elements.Element;
+import de.lessvoid.nifty.screen.Screen;
+
 import java.lang.management.ManagementFactory;
 import java.util.regex.Pattern;
 
@@ -28,5 +35,63 @@ public class Util {
             }
         }
         return false;
+    }
+
+    /**
+     * Returns the element with the given id of the screen with the given id.
+     */
+    public static Element getElementById(OffToNewWorlds application, String screenId, String elementId) {
+
+        SafeArrayList<SceneProcessor> processors = application.getGuiViewPort().getProcessors();
+        for (SceneProcessor processor : processors) {
+
+            if (!(processor instanceof NiftyJmeDisplay)) {
+                continue;
+            }
+
+            Screen buildingDialog = ((NiftyJmeDisplay) processor).getNifty().getScreen(screenId);
+            if (buildingDialog == null) {
+                continue;
+            }
+
+            Element root = buildingDialog.getRootElement();
+            Element element = getElementById(root, elementId);
+            if (element != null) {
+                return element;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the element with the given id of the given screen.
+     */
+    private static Element getElementById(Element element, String id) {
+
+        if (id.equals(element.getId())) {
+            return element;
+        }
+
+        for (Element child : element.getChildren()) {
+            Element result = getElementById(child, id);
+            if (result != null) {
+                return result;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Changes the visibility of a UI element in a given screen.
+     */
+    public static void setVisibility(OffToNewWorlds application, String screenId, String elementId, boolean visible) {
+
+        Element element = getElementById(application, screenId, elementId);
+
+        if (element != null) {
+            element.setVisible(visible);
+        }
     }
 }

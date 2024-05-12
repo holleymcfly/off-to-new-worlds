@@ -2,6 +2,10 @@ package de.herrmann.holger.offtonewworlds.dialogs.topleftmenu;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
+import com.jme3.niftygui.NiftyJmeDisplay;
+import de.herrmann.holger.offtonewworlds.OffToNewWorlds;
+import de.herrmann.holger.offtonewworlds.dialogs.DialogId;
+import de.herrmann.holger.offtonewworlds.dialogs.buildingdialog.BuildingDialog;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
@@ -9,6 +13,12 @@ import de.lessvoid.nifty.screen.ScreenController;
 import javax.annotation.Nonnull;
 
 public class TopLeftMenuController extends BaseAppState implements ScreenController {
+
+    private final OffToNewWorlds application;
+
+    public TopLeftMenuController(OffToNewWorlds application) {
+        this.application = application;
+    }
 
     @Override
     protected void initialize(Application app) { }
@@ -37,6 +47,15 @@ public class TopLeftMenuController extends BaseAppState implements ScreenControl
      */
     @SuppressWarnings("unused")
     public void openBuildingMenu() {
-        System.out.println("open buildings menu");
+
+        NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(application.getAssetManager(),
+                application.getInputManager(), application.getAudioRenderer(), application.getGuiViewPort());
+        Nifty nifty = niftyDisplay.getNifty();
+
+        nifty.addScreen(DialogId.BuildingDialog.name(), new BuildingDialog(DialogId.BuildingDialog.name(),
+                application).build(nifty));
+        nifty.gotoScreen(DialogId.BuildingDialog.name());
+
+        application.getGuiViewPort().addProcessor(niftyDisplay);
     }
 }

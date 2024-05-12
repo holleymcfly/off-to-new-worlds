@@ -1,14 +1,15 @@
 package de.herrmann.holger.offtonewworlds.dialogs.buildingdialog;
 
+import de.herrmann.holger.offtonewworlds.OffToNewWorlds;
 import de.lessvoid.nifty.builder.*;
 
 import javax.annotation.Nonnull;
 
 public class BuildingDialog extends ScreenBuilder {
 
-    public BuildingDialog(@Nonnull String id) {
+    public BuildingDialog(@Nonnull String id, OffToNewWorlds application) {
         super(id);
-        controller(new BuildingDialogController());
+        controller(new BuildingDialogController(application));
         buildUserInterface();
     }
 
@@ -16,49 +17,123 @@ public class BuildingDialog extends ScreenBuilder {
 
         layer(new LayerBuilder("forground") {{
 
-            childLayoutVertical();
+            childLayoutCenter();
 
-            panel(new PanelBuilder("panelTopMenu") {{
+            panel(new PanelBuilder("outerPanelBuildingDialog") {{
                 childLayoutCenter();
-                alignLeft();
-                valignTop();
+                alignCenter();
+                valignCenter();
                 marginTop("10px");
                 marginLeft("10px");
                 backgroundColor("#5E2F00");
-                height("110px");
-                width("300px");
+                height("80%");
+                width("80%");
 
+                panel(new PanelBuilder("innerPanelBuildingDialog") {{
 
-                panel(new PanelBuilder("panelTopMenu") {{
-                    childLayoutCenter();
-                    alignLeft();
-                    valignTop();
-                    marginTop("10px");
-                    marginLeft("10px");
+                    childLayoutHorizontal();
+                    alignCenter();
+                    valignCenter();
+                    width("99%");
+                    height("98%");
                     backgroundColor("#954A00");
-                    height("90px");
-                    width("280px");
 
-                    image(new ImageBuilder() {{
-                        filename("assets/icons/button_menu_building.png");
-                        marginLeft("10px");
-                        height("64px");
-                        width("64px");
-                        align(Align.Left);
-                        visibleToMouse(true);
-                        interactOnClick("openBuildingMenu()");
+                    panel(new PanelBuilder("categorySelectionPanel") {{
+
+                        childLayoutVertical();
+                        alignLeft();
+                        marginLeft("20px");
+                        width("10%");
+                        height("100%");
+
+                        image(new ImageBuilder() {{
+                            filename("assets/icons/button_grass.png");
+                            marginTop("30px");
+                            height("32px");
+                            width("64px");
+                            visibleToMouse(true);
+                            interactOnClick("openGroundSelection()");
+                        }});
+
+                        text(new TextBuilder() {{
+                            text("Boden");
+                            font("aurulent-sans-16.fnt");
+                            color("#000");
+                            width("64px");
+                            height("20px");
+                        }});
+
+                        image(new ImageBuilder() {{
+                            filename("assets/icons/button_menu_building.png");
+                            marginTop("30px");
+                            height("64px");
+                            width("64px");
+                            visibleToMouse(true);
+                            interactOnClick("openBuildingSelection()");
+                        }});
+
+                        text(new TextBuilder() {{
+                            text("Wohngebäude");
+                            font("aurulent-sans-16.fnt");
+                            color("#000");
+                            width("64px");
+                            height("20px");
+                        }});
                     }});
 
-                    // add text
-                    text(new TextBuilder() {{
-                        text("Baumenü");
-                        marginLeft("10px");
-                        align(Align.Left);
-                        valign(VAlign.Bottom);
-                        font("aurulent-sans-16.fnt");
-                        color("#000");
-                        width("64px");
-                        height("20px");
+                    panel(new PanelBuilder("selectionPanel") {{
+
+                        childLayoutAbsoluteInside();
+                        alignLeft();
+                        marginLeft("20px");
+                        width("90%");
+                        height("100%");
+
+                        panel(new PanelBuilder("groundSelection") {{
+
+                            childLayoutVertical();
+                            visible(false);
+
+                            image(new ImageBuilder() {{
+                                filename("assets/icons/button_pathLR.png");
+                                marginTop("30px");
+                                height("32px");
+                                width("64px");
+                                visibleToMouse(true);
+                                interactOnClick("selectTile(\"PathLeftToRight\")");
+                            }});
+
+                            text(new TextBuilder() {{
+                                text("Path Left to Right");
+                                font("aurulent-sans-16.fnt");
+                                color("#000");
+                                width("64px");
+                                height("20px");
+                            }});
+                        }});
+
+                        panel(new PanelBuilder("buildingSelection") {{
+
+                            childLayoutVertical();
+                            visible(false);
+
+                            image(new ImageBuilder() {{
+                                filename("assets/icons/button_menu_building.png");
+                                marginTop("30px");
+                                height("64px");
+                                width("64px");
+                                visibleToMouse(true);
+                                interactOnClick("selectTile(\"Building\")");
+                            }});
+
+                            text(new TextBuilder() {{
+                                text("Some Building...");
+                                font("aurulent-sans-16.fnt");
+                                color("#000");
+                                width("64px");
+                                height("20px");
+                            }});
+                        }});
                     }});
                 }});
             }});

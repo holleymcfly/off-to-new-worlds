@@ -9,6 +9,7 @@ import com.jme3.light.DirectionalLight;
 import com.jme3.math.Vector3f;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.scene.Node;
+import de.herrmann.holger.offtonewworlds.dialogs.DialogId;
 import de.herrmann.holger.offtonewworlds.dialogs.topleftmenu.TopLeftMenu;
 import de.herrmann.holger.offtonewworlds.model.building.BuildingInfo;
 import de.herrmann.holger.offtonewworlds.model.ground.GrassInfo;
@@ -86,8 +87,9 @@ public class OffToNewWorlds extends SimpleApplication {
                 guiViewPort);
         Nifty nifty = niftyDisplay.getNifty();
 
-        nifty.addScreen("start", new TopLeftMenu("start").build(nifty));
-        nifty.gotoScreen("start");
+        nifty.addScreen(DialogId.TopLeftMenu.name(), new TopLeftMenu(DialogId.TopLeftMenu.name(), this)
+                .build(nifty));
+        nifty.gotoScreen(DialogId.TopLeftMenu.name());
 
         guiViewPort.addProcessor(niftyDisplay);
     }
