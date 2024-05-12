@@ -61,6 +61,7 @@ public class BuildingDialog extends ScreenBuilder {
                             color("#000");
                             width("64px");
                             height("20px");
+                            interactOnClick("openGroundSelection()");
                         }});
 
                         image(new ImageBuilder() {{
@@ -78,6 +79,7 @@ public class BuildingDialog extends ScreenBuilder {
                             color("#000");
                             width("64px");
                             height("20px");
+                            interactOnClick("openBuildingSelection()");
                         }});
                     }});
 
@@ -104,7 +106,7 @@ public class BuildingDialog extends ScreenBuilder {
                             }});
 
                             text(new TextBuilder() {{
-                                text("Path Left to Right");
+                                text("Pfad von links nach rechts");
                                 font("aurulent-sans-16.fnt");
                                 color("#000");
                                 width("64px");
@@ -127,7 +129,7 @@ public class BuildingDialog extends ScreenBuilder {
                             }});
 
                             text(new TextBuilder() {{
-                                text("Some Building...");
+                                text("Irgendein Gebäude...");
                                 font("aurulent-sans-16.fnt");
                                 color("#000");
                                 width("64px");
