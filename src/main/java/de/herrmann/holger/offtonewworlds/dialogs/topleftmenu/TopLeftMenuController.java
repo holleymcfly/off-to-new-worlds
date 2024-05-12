@@ -3,7 +3,7 @@ package de.herrmann.holger.offtonewworlds.dialogs.topleftmenu;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.niftygui.NiftyJmeDisplay;
-import de.herrmann.holger.offtonewworlds.OffToNewWorlds;
+import de.herrmann.holger.offtonewworlds.core.OffToNewWorlds;
 import de.herrmann.holger.offtonewworlds.dialogs.DialogId;
 import de.herrmann.holger.offtonewworlds.dialogs.buildingdialog.BuildingDialog;
 import de.lessvoid.nifty.Nifty;

@@ -1,7 +1,7 @@
 package de.herrmann.holger.offtonewworlds.settings;
 
 import com.jme3.system.AppSettings;
-import de.herrmann.holger.offtonewworlds.OffToNewWorlds;
+import de.herrmann.holger.offtonewworlds.core.OffToNewWorlds;
 
 import java.awt.*;
 

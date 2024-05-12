@@ -1,6 +1,6 @@
 package de.herrmann.holger.offtonewworlds.dialogs.buildingdialog;
 
-import de.herrmann.holger.offtonewworlds.OffToNewWorlds;
+import de.herrmann.holger.offtonewworlds.core.OffToNewWorlds;
 import de.lessvoid.nifty.builder.*;
 
 import javax.annotation.Nonnull;

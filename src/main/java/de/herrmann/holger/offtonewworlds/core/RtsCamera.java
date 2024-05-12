@@ -1,4 +1,4 @@
-package de.herrmann.holger.offtonewworlds;
+package de.herrmann.holger.offtonewworlds.core;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.collision.CollisionResult;
@@ -23,6 +23,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.Control;
 import de.herrmann.holger.offtonewworlds.model.TileInfo;
+import de.herrmann.holger.offtonewworlds.util.Constants;
 import de.herrmann.holger.offtonewworlds.util.Util;
 
 /**
@@ -319,7 +320,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
         Geometry g = getHitTile();
         if (g != null) {
 
-            TileInfo tileInfo = g.getUserData("userData");
+            TileInfo tileInfo = g.getUserData(Constants.USER_DATA);
             System.out.println(tileInfo);
 
             // Temp: change color of the hidden tile.
@@ -369,10 +370,10 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
                 direction[ROTATE] = -1;
             }
         }
-        else if (application.isTileToBeBuilt()) {
+        else if (application.getBuilderHelper().getTileTypeToBeBuilt()) {
             Geometry g = getHitTile();
             if (g != null) {
-                application.showTileToBeBuilt(g);
+                application.getBuilderHelper().showTileToBeBuilt(g);
             }
 
             direction[ROTATE] = 0;

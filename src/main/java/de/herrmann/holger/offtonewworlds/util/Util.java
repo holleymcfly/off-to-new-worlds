@@ -3,7 +3,7 @@ package de.herrmann.holger.offtonewworlds.util;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.post.SceneProcessor;
 import com.jme3.util.SafeArrayList;
-import de.herrmann.holger.offtonewworlds.OffToNewWorlds;
+import de.herrmann.holger.offtonewworlds.core.OffToNewWorlds;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 

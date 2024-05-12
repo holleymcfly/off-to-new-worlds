@@ -2,7 +2,7 @@ package de.herrmann.holger.offtonewworlds.dialogs.buildingdialog;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
-import de.herrmann.holger.offtonewworlds.OffToNewWorlds;
+import de.herrmann.holger.offtonewworlds.core.OffToNewWorlds;
 import de.herrmann.holger.offtonewworlds.dialogs.DialogId;
 import de.herrmann.holger.offtonewworlds.model.TileType;
 import de.herrmann.holger.offtonewworlds.util.Util;
@@ -65,7 +65,7 @@ public class BuildingDialogController extends BaseAppState implements ScreenCont
      */
     @SuppressWarnings("unused")
     public void selectTile(String buildInfo) {
-        application.setTileToBeBuilt(TileType.valueOf(buildInfo));
+        application.getBuilderHelper().setTileTypeToBeBuilt(TileType.valueOf(buildInfo));
         Util.removeScreenById(application, DialogId.BuildingDialog.name());
     }
 }
