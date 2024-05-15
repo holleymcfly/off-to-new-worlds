@@ -78,6 +78,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     private final String RIGHT = "Rigjt";
     private final String MOUSE_MIDDLE = "MouseMiddleClick";
     private final String MOUSE_LEFT_CLICK = "MouseLeftClick";
+    private final String MOUSE_RIGHT_CLICK = "MouseRightClick";
     private final String UP = "Up";
     private final String DOWN = "DOWN";
 
@@ -123,7 +124,8 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
         inputManager.addMapping(FORWARD, new MouseAxisTrigger(MouseInput.AXIS_WHEEL, true));
         inputManager.addMapping(MOUSE_MIDDLE, new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE));
         inputManager.addMapping(MOUSE_LEFT_CLICK, new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
-        inputManager.addListener(this, FORWARD, BACK, MOUSE_MIDDLE, MOUSE_LEFT_CLICK);
+        inputManager.addMapping(MOUSE_RIGHT_CLICK, new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
+        inputManager.addListener(this, FORWARD, BACK, MOUSE_MIDDLE, MOUSE_LEFT_CLICK, MOUSE_RIGHT_CLICK);
 
         inputManager.addMapping(LEFT, new MouseAxisTrigger(MouseInput.AXIS_X, true));
         inputManager.addMapping(RIGHT, new MouseAxisTrigger(MouseInput.AXIS_X, false));
@@ -201,6 +203,15 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
         cam.setLocation(position);
         cam.lookAt(center, new Vector3f(0, 1, 0));
 
+        handleMouseCursor();
+    }
+
+    /**
+     * If a tile to build has been selected, the mouse cursor has to be changed, having a red cross or a green
+     * check to indicate whether the selected tile can be built there.
+     */
+    private void handleMouseCursor() {
+
         if (application.getBuilderHelper().isTileToBeBuilt()) {
             if (application.getBuilderHelper().canBeBuilt()) {
                 application.getInputManager().setMouseCursor(buildOkCursor);
@@ -208,6 +219,9 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
             else {
                 application.getInputManager().setMouseCursor(buildNotOkCursor);
             }
+        }
+        else {
+            application.getInputManager().setMouseCursor(null);
         }
     }
 
@@ -311,7 +325,11 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     public void onAction(String name, boolean isPressed, float tpf) {
 
         if (MOUSE_LEFT_CLICK.equals(name) && !isPressed) {
-            handleMouseClick();
+            handleLeftMouseClick(tpf);
+        }
+
+        if (MOUSE_RIGHT_CLICK.equals(name)) {
+            handleRightMouseClick();
         }
 
         if (MOUSE_MIDDLE.equals(name)) {
@@ -327,9 +345,17 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
         }
     }
 
-    private void handleMouseClick() {
+    private void handleRightMouseClick() {
 
-        Geometry g = getHitTile();
+        if (application.getBuilderHelper().isTileToBeBuilt()) {
+            application.getBuilderHelper().showTileToBeBuilt(null);
+            application.getBuilderHelper().setTileTypeToBeBuilt(null);
+        }
+    }
+
+    private void handleLeftMouseClick(float tpf) {
+
+        Geometry g = getHitTile(tpf);
         if (g != null) {
 
             TileInfo tileInfo = g.getUserData(Constants.USER_DATA);
@@ -343,11 +369,13 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
         }
     }
 
-    private Geometry getHitTile() {
+    private Geometry getHitTile(float tpf) {
 
         CollisionResults results = new CollisionResults();
         Vector2f click2d = inputManager.getCursorPosition();
+        click2d.setY(click2d.getY());
         Vector3f click3d = cam.getWorldCoordinates(click2d, 0);
+        click3d.setY(click3d.getY() + (16f*tpf));
         Vector3f dir = cam.getWorldCoordinates(click2d, 1).subtractLocal(click3d);
         Ray ray = new Ray(click3d, dir);
 
@@ -383,7 +411,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
             }
         }
         else if (application.getBuilderHelper().isTileToBeBuilt()) {
-            Geometry g = getHitTile();
+            Geometry g = getHitTile(tpf);
             application.getBuilderHelper().showTileToBeBuilt(g);
 
             direction[ROTATE] = 0;
