@@ -375,6 +375,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
         Vector2f click2d = inputManager.getCursorPosition();
         click2d.setY(click2d.getY());
         Vector3f click3d = cam.getWorldCoordinates(click2d, 0);
+        // Adjust the y position - if not, the click is performed in the middle of the cursor icon, not on its tip.
         click3d.setY(click3d.getY() + (16f*tpf));
         Vector3f dir = cam.getWorldCoordinates(click2d, 1).subtractLocal(click3d);
         Ray ray = new Ray(click3d, dir);
