@@ -1,8 +1,8 @@
 package de.herrmann.holger.offtonewworlds.core;
 
-import com.jme3.asset.AssetManager;
 import com.jme3.collision.CollisionResult;
 import com.jme3.collision.CollisionResults;
+import com.jme3.cursors.plugins.JmeCursor;
 import com.jme3.export.JmeExporter;
 import com.jme3.export.JmeImporter;
 import com.jme3.input.InputManager;
@@ -44,7 +44,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
         DISTANCE
     }
 
-    private final ColorRGBA backgroundColor = new ColorRGBA(0.6f, 0.92549f, 1f, 1f);
+    private final ColorRGBA backgroundColor = new ColorRGBA(0.7f, 0.8f, 1f, 1f);
     private InputManager inputManager;
     private final Camera cam;
     private final Spatial target;
@@ -81,13 +81,16 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     private final String UP = "Up";
     private final String DOWN = "DOWN";
 
-    private final AssetManager assetManager;
+    private final JmeCursor buildOkCursor;
+    private final JmeCursor buildNotOkCursor;
 
-    public RtsCamera(Camera cam, Spatial target, AssetManager assetManager, OffToNewWorlds application) {
+    public RtsCamera(Camera cam, Spatial target, OffToNewWorlds application) {
         this.cam = cam;
         this.target = target;
-        this.assetManager = assetManager;
         this.application = application;
+
+        this.buildOkCursor = (JmeCursor) application.getAssetManager().loadAsset("assets/cursor/mouse_ok.cur");
+        this.buildNotOkCursor = (JmeCursor) application.getAssetManager().loadAsset("assets/cursor/mouse_not_ok.cur");
 
         setMinMaxValues(Degree.SIDE, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
         setMinMaxValues(Degree.FWD, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
@@ -139,7 +142,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
 
     @Override
     public Control cloneForSpatial(Spatial spatial) {
-        RtsCamera other = new RtsCamera(cam, spatial, assetManager, application);
+        RtsCamera other = new RtsCamera(cam, spatial, application);
         other.registerWithInput(inputManager);
         return other;
     }
@@ -197,6 +200,15 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
 
         cam.setLocation(position);
         cam.lookAt(center, new Vector3f(0, 1, 0));
+
+        if (application.getBuilderHelper().isTileToBeBuilt()) {
+            if (application.getBuilderHelper().canBeBuilt()) {
+                application.getInputManager().setMouseCursor(buildOkCursor);
+            }
+            else {
+                application.getInputManager().setMouseCursor(buildNotOkCursor);
+            }
+        }
     }
 
     /**
@@ -324,7 +336,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
             System.out.println(tileInfo);
 
             // Temp: change color of the hidden tile.
-            Material mat = new Material(assetManager,"assets/Unshaded.j3md");
+            Material mat = new Material(application.getAssetManager(),"assets/Unshaded.j3md");
             mat.setColor("Color", ColorRGBA.randomColor());
             g.setMaterial(mat);
             // ------- end temp
@@ -370,11 +382,9 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
                 direction[ROTATE] = -1;
             }
         }
-        else if (application.getBuilderHelper().getTileTypeToBeBuilt()) {
+        else if (application.getBuilderHelper().isTileToBeBuilt()) {
             Geometry g = getHitTile();
-            if (g != null) {
-                application.getBuilderHelper().showTileToBeBuilt(g);
-            }
+            application.getBuilderHelper().showTileToBeBuilt(g);
 
             direction[ROTATE] = 0;
             direction[TILT] = 0;

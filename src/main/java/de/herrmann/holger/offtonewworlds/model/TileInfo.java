@@ -19,8 +19,7 @@ public abstract class TileInfo implements Savable {
     }
 
     public TileInfo(TileType type, String filename, float x, float y, float z) {
-        this.type = type;
-        this.filename = filename;
+        this(type, filename);
         this.x = x;
         this.y = y;
         this.z = z;
@@ -57,6 +56,11 @@ public abstract class TileInfo implements Savable {
     public String getFilename() {
         return filename;
     }
+
+    /**
+     * Says if the tile can be built upon the given target tile.
+     */
+    public abstract boolean canBeBuildUpon(TileInfo targetTile);
 
     @Override
     public String toString() {

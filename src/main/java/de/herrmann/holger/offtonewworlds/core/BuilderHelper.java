@@ -46,7 +46,7 @@ public class BuilderHelper {
         this.tileTypeToBeBuilt = tileTypeToBeBuilt;
     }
 
-    public boolean getTileTypeToBeBuilt() {
+    public boolean isTileToBeBuilt() {
         return tileTypeToBeBuilt != null;
     }
 
@@ -54,6 +54,14 @@ public class BuilderHelper {
      * Creates the tile to be built and replaces it at the position of the given geometry.
      */
     public void showTileToBeBuilt(Geometry g) {
+
+        if (g == null) {
+            // The mouse pointer hasn't hit a tile.
+            replacePreviousPreview();
+            previewTile = null;
+            temporarilyReplacedTile = null;
+            return;
+        }
 
         TileInfo temporarilyReplacedTileInfo = g.getUserData(Constants.USER_DATA);
 
@@ -103,5 +111,21 @@ public class BuilderHelper {
                 tileInfo.getZ()));
         addUserDataToNode(previousTile, Constants.USER_DATA, tileInfo);
         application.getRootNode().attachChild(previousTile);
+    }
+
+    /**
+     * If a new tile shall be built (previewTile), this method returns if this tile can be built on the
+     * currently selected position (temporarilyReplacedTile).
+     */
+    public boolean canBeBuilt() {
+
+        if (previewTile == null || temporarilyReplacedTile == null) {
+            return false;
+        }
+
+        TileInfo temporarilyReplacedTileInfo = temporarilyReplacedTile.getUserData(Constants.USER_DATA);
+        TileInfo previewTileInfo = previewTile.getUserData(Constants.USER_DATA);
+
+        return previewTileInfo.canBeBuildUpon(temporarilyReplacedTileInfo);
     }
 }

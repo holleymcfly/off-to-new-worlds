@@ -9,8 +9,8 @@ public class OffToNewWorldsSettings {
 
     private static OffToNewWorldsSettings offToNewWorldsSettings;
 
-    private AppSettings appSettings;
-    private DisplaySettings displaySettings;
+    private final AppSettings appSettings;
+    private final DisplaySettings displaySettings;
 
     public static OffToNewWorldsSettings get() {
         if (offToNewWorldsSettings == null) {

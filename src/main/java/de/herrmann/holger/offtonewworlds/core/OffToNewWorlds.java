@@ -93,7 +93,7 @@ public class OffToNewWorlds extends SimpleApplication {
 
     private void initCamera() {
 
-        final RtsCamera rtsCamera = new RtsCamera(cam, rootNode, assetManager, this);
+        final RtsCamera rtsCamera = new RtsCamera(cam, rootNode, this);
         rtsCamera.registerWithInput(inputManager);
         rtsCamera.setCenter(new Vector3f(0, 0f, 0));
     }
