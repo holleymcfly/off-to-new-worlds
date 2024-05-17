@@ -5,7 +5,6 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import de.herrmann.holger.offtonewworlds.model.TileInfo;
 import de.herrmann.holger.offtonewworlds.model.TileType;
-import de.herrmann.holger.offtonewworlds.model.TileUtil;
 import de.herrmann.holger.offtonewworlds.util.Constants;
 
 /**
@@ -79,11 +78,7 @@ public class BuilderHelper {
         temporarilyReplacedTile = g;
         application.getRootNode().detachChild(g);
 
-        TileInfo tileInfo = TileUtil.getTileInfoForType(tileTypeToBeBuilt);
-        if (tileInfo == null) {
-            return;
-        }
-
+        TileInfo tileInfo = TileType.getTileInfoForTileType(tileTypeToBeBuilt);
         previewTile = (Node) application.getAssetManager().loadModel(tileInfo.getFilename());
         previewTile.move(new Vector3f(temporarilyReplacedTileInfo.getX(), temporarilyReplacedTileInfo.getY(),
                 temporarilyReplacedTileInfo.getZ()));
@@ -96,6 +91,11 @@ public class BuilderHelper {
 
     /**
      * Replaces the tile that has been replaced by the preview tile with the original tile.
+     * <br>
+     * NOTE: This seems to somehow "break" the new tile: In a test case where I replace the material of tile that
+     * has been mouse clicked, this does not work for tiles that have been replaced like this (after having been
+     * replaced by the preview tile). At the moment, this doesn't bother me, as long as the tile can be clicked and
+     * returns the correct position (what it does).
      */
     private void replacePreviousPreview() {
 

@@ -7,11 +7,11 @@ import de.herrmann.holger.offtonewworlds.model.TileType;
 public class PathLeftToRightInfo extends GroundInfo implements Savable {
 
     public PathLeftToRightInfo() {
-        super(TileType.Grass, "assets/ground/pathLR.glb");
+        super(TileType.PathLeftToRight, "assets/ground/pathLR.glb");
     }
 
     public PathLeftToRightInfo(float x, float y, float z) {
-        super(TileType.Grass, "assets/ground/pathLR.glb", x, y, z);
+        super(TileType.PathLeftToRight, "assets/ground/pathLR.glb", x, y, z);
     }
 
     /**
@@ -19,6 +19,6 @@ public class PathLeftToRightInfo extends GroundInfo implements Savable {
      */
     @Override
     public boolean canBeBuildUpon(TileInfo targetTile) {
-        return TileType.Grass.equals(targetTile.getType());
+        return TileType.PathLeftToRight.equals(targetTile.getType());
     }
 }

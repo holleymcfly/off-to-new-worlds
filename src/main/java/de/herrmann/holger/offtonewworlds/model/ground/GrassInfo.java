@@ -6,6 +6,10 @@ import de.herrmann.holger.offtonewworlds.model.TileType;
 
 public class GrassInfo extends GroundInfo implements Savable {
 
+    public GrassInfo() {
+        super(TileType.Grass, "assets/ground/grass.glb");
+    }
+
     public GrassInfo(float x, float y, float z) {
         super(TileType.Grass, "assets/ground/grass.glb", x, y, z);
     }

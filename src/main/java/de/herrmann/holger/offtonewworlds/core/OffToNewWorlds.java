@@ -11,10 +11,11 @@ import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.scene.Node;
 import de.herrmann.holger.offtonewworlds.dialogs.DialogId;
 import de.herrmann.holger.offtonewworlds.dialogs.topleftmenu.TopLeftMenu;
-import de.herrmann.holger.offtonewworlds.model.building.BuildingInfo;
-import de.herrmann.holger.offtonewworlds.model.ground.GrassInfo;
+import de.herrmann.holger.offtonewworlds.model.TileInfo;
+import de.herrmann.holger.offtonewworlds.model.TileType;
 import de.herrmann.holger.offtonewworlds.settings.OffToNewWorldsSettings;
 import de.herrmann.holger.offtonewworlds.util.Constants;
+import de.herrmann.holger.offtonewworlds.util.TileUtil;
 import de.herrmann.holger.offtonewworlds.util.Util;
 import de.lessvoid.nifty.Nifty;
 
@@ -51,22 +52,19 @@ public class OffToNewWorlds extends SimpleApplication {
 
     private void initWorld() {
 
-        Node building = (Node) assetManager.loadModel("assets/ground/Building.glb");
-        building.move(new Vector3f(0, 0, 0));
-        builderHelper.addUserDataToNode(building, Constants.USER_DATA, new BuildingInfo(0, 0, 0));
-        rootNode.attachChild(building);
-
-        for (int j = 0; j < 100; j++) {
-            for (int i = 0; i < 100; i++) {
-                double rand = Math.random();
-                String grassSource = "assets/ground/grass.glb";
-                if (rand < 0.5) {
-                    grassSource = "assets/ground/grass2.glb";
-                }
-                Node newGrass = (Node) assetManager.loadModel(grassSource);
-                newGrass.move(new Vector3f(i * 2f, 0, j * 2f));
-                builderHelper.addUserDataToNode(newGrass, Constants.USER_DATA, new GrassInfo(i * 2f, 0, j * 2f));
-                rootNode.attachChild(newGrass);
+        int[][] worldAsTileIntegers = TileUtil.loadWorld();
+        for (int lineNumber=0; lineNumber< worldAsTileIntegers.length; lineNumber++) {
+            for (int columnNumber=0; columnNumber<worldAsTileIntegers[0].length; columnNumber++) {
+                int tileAsInt = worldAsTileIntegers[lineNumber][columnNumber];
+                TileType type = TileType.fromIntType(tileAsInt);
+                TileInfo tileInfo = TileType.getTileInfoForTileType(type);
+                tileInfo.setX(columnNumber*2f);
+                tileInfo.setY(0f);
+                tileInfo.setZ(lineNumber*2f);
+                Node tile = (Node) assetManager.loadModel(tileInfo.getFilename());
+                tile.move(new Vector3f(columnNumber*2f, 0, lineNumber*2f));
+                builderHelper.addUserDataToNode(tile, Constants.USER_DATA, tileInfo);
+                rootNode.attachChild(tile);
             }
         }
     }

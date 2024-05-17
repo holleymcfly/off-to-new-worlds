@@ -6,12 +6,16 @@ import com.jme3.export.Savable;
 
 public abstract class TileInfo implements Savable {
 
-    private final TileType type;
-    private final String filename;
+    private TileType type;
+    private String filename;
 
     private float x;
     private float y;
     private float z;
+
+    public TileInfo() {
+        throw new UnsupportedOperationException("Don't call the empty constructor of a tile info.");
+    }
 
     public TileInfo(TileType type, String filename) {
         this.type = type;
