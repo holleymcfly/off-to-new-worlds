@@ -23,6 +23,11 @@ public class OffToNewWorlds extends SimpleApplication {
 
     private final BuilderHelper builderHelper;
 
+    // This map contains the world with all the tiles in integer representation. It's important that this map
+    // is always in sync with the actual root node children, because it is used for e.g. getting the neighbours of
+    // a tile (e.g. for checking if a specific building can be built).
+    private int[][] worldAsTileIntegers;
+
     public static void main(String[] args) {
 
         OffToNewWorlds offToNewWorlds = new OffToNewWorlds();
@@ -52,7 +57,7 @@ public class OffToNewWorlds extends SimpleApplication {
 
     private void initWorld() {
 
-        int[][] worldAsTileIntegers = TileUtil.loadWorld();
+        worldAsTileIntegers = TileUtil.loadWorld();
         for (int lineNumber=0; lineNumber< worldAsTileIntegers.length; lineNumber++) {
             for (int columnNumber=0; columnNumber<worldAsTileIntegers[0].length; columnNumber++) {
                 int tileAsInt = worldAsTileIntegers[lineNumber][columnNumber];
