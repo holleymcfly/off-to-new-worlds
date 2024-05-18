@@ -63,13 +63,13 @@ public class OffToNewWorlds extends SimpleApplication {
                 int tileAsInt = worldAsTileIntegers[row][column];
                 TileType type = TileType.fromIntType(tileAsInt);
                 TileInfo tileInfo = TileType.getTileInfoForTileType(type);
-                tileInfo.setX(column*2f);
-                tileInfo.setY(0f);
-                tileInfo.setZ(row*2f);
+                tileInfo.setX(column);
+                tileInfo.setY(0);
+                tileInfo.setZ(row);
                 tileInfo.setRow(row);
                 tileInfo.setColumn(column);
                 Node tile = (Node) assetManager.loadModel(tileInfo.getFilename());
-                tile.move(new Vector3f(column*2f, 0, row*2f));
+                tile.move(new Vector3f(column, 0, row));
                 builderHelper.addUserDataToNode(tile, Constants.USER_DATA, tileInfo);
                 rootNode.attachChild(tile);
             }
