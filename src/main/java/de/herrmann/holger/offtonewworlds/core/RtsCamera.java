@@ -88,16 +88,16 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     private final String UP = "Up";
     private final String DOWN = "DOWN";
 
-    private JmeCursor buildOkCursor;
-    private JmeCursor buildNotOkCursor;
+    private final JmeCursor buildOkCursor;
+    private final JmeCursor buildNotOkCursor;
 
     public RtsCamera(Camera cam, Spatial target, OffToNewWorlds application) {
         this.cam = cam;
         this.target = target;
         this.application = application;
 
-        setupBuildOkCursor();
-        setupBuildNotOkCursor();
+        buildOkCursor = initCursor("assets/cursor/mouse_ok.png");
+        buildNotOkCursor = initCursor("assets/cursor/mouse_not_ok.png");
 
         setMinMaxValues(Degree.SIDE, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
         setMinMaxValues(Degree.FWD, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
@@ -116,8 +116,8 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
         initPosition();
     }
 
-    protected void setupBuildNotOkCursor() {
-        Texture cursorTexture = application.getAssetManager().loadTexture("assets/cursor/mouse_not_ok.png");
+    protected JmeCursor initCursor(String imagePath) {
+        Texture cursorTexture = application.getAssetManager().loadTexture(imagePath);
 
         Image image = cursorTexture.getImage();
         ByteBuffer imgByteBuff = image.getData(0).rewind();
@@ -129,35 +129,14 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
             curIntBuff.put(argb);
         }
 
-        buildNotOkCursor = new JmeCursor();
-        buildNotOkCursor.setHeight(image.getHeight());
-        buildNotOkCursor.setWidth(image.getWidth());
-        buildNotOkCursor.setNumImages(1);
-        buildNotOkCursor.setyHotSpot(image.getHeight() - 3);
-        buildNotOkCursor.setxHotSpot(3);
-        buildNotOkCursor.setImagesData(curIntBuff.rewind());
-    }
-
-    protected void setupBuildOkCursor() {
-        Texture cursorTexture = application.getAssetManager().loadTexture("assets/cursor/mouse_ok.png");
-
-        Image image = cursorTexture.getImage();
-        ByteBuffer imgByteBuff = image.getData(0).rewind();
-        IntBuffer curIntBuff = BufferUtils.createIntBuffer(image.getHeight() * image.getWidth());
-
-        while (imgByteBuff.hasRemaining()) {
-            int rgba = imgByteBuff.getInt();
-            int argb = ((rgba & 255) << 24) | (rgba >> 8);
-            curIntBuff.put(argb);
-        }
-
-        buildOkCursor = new JmeCursor();
-        buildOkCursor.setHeight(image.getHeight());
-        buildOkCursor.setWidth(image.getWidth());
-        buildOkCursor.setNumImages(1);
-        buildOkCursor.setyHotSpot(image.getHeight() - 3);
-        buildOkCursor.setxHotSpot(3);
-        buildOkCursor.setImagesData(curIntBuff.rewind());
+        JmeCursor cursor = new JmeCursor();
+        cursor.setHeight(image.getHeight());
+        cursor.setWidth(image.getWidth());
+        cursor.setNumImages(1);
+        cursor.setyHotSpot(image.getHeight() - 3);
+        cursor.setxHotSpot(3);
+        cursor.setImagesData(curIntBuff.rewind());
+        return cursor;
     }
 
     public void setMaxSpeed(Degree deg, float maxSpd, float accelTime) {
