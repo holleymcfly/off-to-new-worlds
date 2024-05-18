@@ -23,9 +23,7 @@ public class DisplaySettings {
         appSettings.setResolution(modes[modePos].getWidth(), modes[modePos].getHeight());
         appSettings.setFrequency(modes[modePos].getRefreshRate());
         appSettings.setBitsPerPixel(modes[modePos].getBitDepth());
-        // TODO: This line makes the cursor disappear. Community has been asked:
-        //  https://hub.jmonkeyengine.org/t/custom-mouse-cursor-disappearing-in-fullscreen-mode/47665.
-//        appSettings.setFullscreen(device.isFullScreenSupported());
+        appSettings.setFullscreen(device.isFullScreenSupported());
         offToNewWorlds.setSettings(appSettings);
     }
 

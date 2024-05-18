@@ -22,9 +22,15 @@ import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.Control;
+import com.jme3.texture.Image;
+import com.jme3.texture.Texture;
 import de.herrmann.holger.offtonewworlds.model.TileInfo;
 import de.herrmann.holger.offtonewworlds.util.Constants;
 import de.herrmann.holger.offtonewworlds.util.Util;
+import org.lwjgl.BufferUtils;
+
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 
 /**
  * Real time strategy camera.
@@ -82,16 +88,16 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     private final String UP = "Up";
     private final String DOWN = "DOWN";
 
-    private final JmeCursor buildOkCursor;
-    private final JmeCursor buildNotOkCursor;
+    private JmeCursor buildOkCursor;
+    private JmeCursor buildNotOkCursor;
 
     public RtsCamera(Camera cam, Spatial target, OffToNewWorlds application) {
         this.cam = cam;
         this.target = target;
         this.application = application;
 
-        this.buildOkCursor = (JmeCursor) application.getAssetManager().loadAsset("assets/cursor/mouse_ok.cur");
-        this.buildNotOkCursor = (JmeCursor) application.getAssetManager().loadAsset("assets/cursor/mouse_not_ok.cur");
+        setupBuildOkCursor();
+        setupBuildNotOkCursor();
 
         setMinMaxValues(Degree.SIDE, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
         setMinMaxValues(Degree.FWD, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY);
@@ -108,6 +114,50 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
         target.addControl(this);
 
         initPosition();
+    }
+
+    protected void setupBuildNotOkCursor() {
+        Texture cursorTexture = application.getAssetManager().loadTexture("assets/cursor/mouse_not_ok.png");
+
+        Image image = cursorTexture.getImage();
+        ByteBuffer imgByteBuff = image.getData(0).rewind();
+        IntBuffer curIntBuff = BufferUtils.createIntBuffer(image.getHeight() * image.getWidth());
+
+        while (imgByteBuff.hasRemaining()) {
+            int rgba = imgByteBuff.getInt();
+            int argb = ((rgba & 255) << 24) | (rgba >> 8);
+            curIntBuff.put(argb);
+        }
+
+        buildNotOkCursor = new JmeCursor();
+        buildNotOkCursor.setHeight(image.getHeight());
+        buildNotOkCursor.setWidth(image.getWidth());
+        buildNotOkCursor.setNumImages(1);
+        buildNotOkCursor.setyHotSpot(image.getHeight() - 3);
+        buildNotOkCursor.setxHotSpot(3);
+        buildNotOkCursor.setImagesData(curIntBuff.rewind());
+    }
+
+    protected void setupBuildOkCursor() {
+        Texture cursorTexture = application.getAssetManager().loadTexture("assets/cursor/mouse_ok.png");
+
+        Image image = cursorTexture.getImage();
+        ByteBuffer imgByteBuff = image.getData(0).rewind();
+        IntBuffer curIntBuff = BufferUtils.createIntBuffer(image.getHeight() * image.getWidth());
+
+        while (imgByteBuff.hasRemaining()) {
+            int rgba = imgByteBuff.getInt();
+            int argb = ((rgba & 255) << 24) | (rgba >> 8);
+            curIntBuff.put(argb);
+        }
+
+        buildOkCursor = new JmeCursor();
+        buildOkCursor.setHeight(image.getHeight());
+        buildOkCursor.setWidth(image.getWidth());
+        buildOkCursor.setNumImages(1);
+        buildOkCursor.setyHotSpot(image.getHeight() - 3);
+        buildOkCursor.setxHotSpot(3);
+        buildOkCursor.setImagesData(curIntBuff.rewind());
     }
 
     public void setMaxSpeed(Degree deg, float maxSpd, float accelTime) {

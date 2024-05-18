@@ -19,6 +19,6 @@ public class PathLeftToRightInfo extends GroundInfo implements Savable {
      */
     @Override
     public boolean canBeBuildUpon(TileInfo targetTile) {
-        return TileType.PathLeftToRight.equals(targetTile.getType());
+        return TileType.Grass.equals(targetTile.getType());
     }
 }
