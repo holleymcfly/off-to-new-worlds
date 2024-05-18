@@ -390,6 +390,11 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
             TileInfo tileInfo = g.getUserData(Constants.USER_DATA);
             System.out.println(tileInfo);
 
+            if (application.getBuilderHelper().isTileToBeBuilt()) {
+                application.getBuilderHelper().build();
+                return;
+            }
+
             // Temp: change color of the hidden tile.
             Material mat = new Material(application.getAssetManager(),"assets/Unshaded.j3md");
             mat.setColor("Color", ColorRGBA.randomColor());

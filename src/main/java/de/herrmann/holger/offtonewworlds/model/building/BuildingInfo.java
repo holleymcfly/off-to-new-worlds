@@ -12,10 +12,6 @@ public class BuildingInfo extends TileInfo {
         super(TileType.Building, "assets/ground/Building.glb");
     }
 
-    public BuildingInfo(float x, float y, float z) {
-        super(TileType.Building, "assets/ground/Building.glb", x, y, z);
-    }
-
     @Override
     public boolean canBeBuildUpon(TileInfo targetTile) {
         return false;

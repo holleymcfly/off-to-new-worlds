@@ -6,13 +6,19 @@ import com.jme3.export.Savable;
 
 public abstract class TileInfo implements Savable {
 
-    private TileType type;
-    private String filename;
+    private final TileType type;
+    private final String filename;
 
+    // The location of the node in the world.
     private float x;
     private float y;
     private float z;
 
+    // The location in the world definition map.
+    private int row;
+    private int column;
+
+    // Needed to ensure that all concrete subclasses implement this constructor.
     public TileInfo() {
         throw new UnsupportedOperationException("Don't call the empty constructor of a tile info.");
     }
@@ -22,35 +28,44 @@ public abstract class TileInfo implements Savable {
         this.filename = filename;
     }
 
-    public TileInfo(TileType type, String filename, float x, float y, float z) {
-        this(type, filename);
-        this.x = x;
-        this.y = y;
-        this.z = z;
+    public float getX() {
+        return x;
     }
 
     public void setX(float x) {
         this.x = x;
     }
 
+    public float getY() {
+        return y;
+    }
+
     public void setY(float y) {
         this.y = y;
+    }
+
+    public float getZ() {
+        return z;
     }
 
     public void setZ(float z) {
         this.z = z;
     }
 
-    public float getX() {
-        return x;
+    public int getRow() {
+        return row;
     }
 
-    public float getY() {
-        return y;
+    public void setRow(int row) {
+        this.row = row;
     }
 
-    public float getZ() {
-        return z;
+    public int getColumn() {
+        return column;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
     }
 
     public TileType getType() {

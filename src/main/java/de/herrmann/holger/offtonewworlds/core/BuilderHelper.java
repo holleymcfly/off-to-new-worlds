@@ -85,6 +85,8 @@ public class BuilderHelper {
         tileInfo.setX(temporarilyReplacedTileInfo.getX());
         tileInfo.setY(temporarilyReplacedTileInfo.getY());
         tileInfo.setZ(temporarilyReplacedTileInfo.getZ());
+        tileInfo.setRow(temporarilyReplacedTileInfo.getRow());
+        tileInfo.setColumn(temporarilyReplacedTileInfo.getColumn());
         addUserDataToNode(previewTile, Constants.USER_DATA, tileInfo);
         application.getRootNode().attachChild(previewTile);
     }
@@ -127,5 +129,28 @@ public class BuilderHelper {
         TileInfo previewTileInfo = previewTile.getUserData(Constants.USER_DATA);
 
         return previewTileInfo.canBeBuildUpon(temporarilyReplacedTileInfo);
+    }
+
+    /**
+     * Used when a new tile shall be built. Precondition is that a previewTile exists.
+     * As the preview tile is already attached to the root node, this method simply sets the
+     * temporarilyReplacedTileInfo to null.
+     * And, don't forget: the world tile map has to be modified, too.
+     * <br>
+     * For now, we don't reset the tileTypeToBeBuilt. If we do that, the mouse cursor will be reset. That's
+     * probably not desired, if several tiles of the same type shall be built (e.g. paths).
+     * A better approach would be to check if the resources that are needed for the tile to be built are still
+     * enough for building another tile. Then we could keep the cursor depending on the resources.
+     */
+    public void build() {
+
+        if (previewTile == null) {
+            return;
+        }
+
+        temporarilyReplacedTile = null;
+
+        TileInfo tileInfo = previewTile.getUserData(Constants.USER_DATA);
+        application.setTileToWorldMap(tileInfo);
     }
 }

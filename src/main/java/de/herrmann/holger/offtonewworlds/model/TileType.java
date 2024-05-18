@@ -23,7 +23,7 @@ public enum TileType {
         this.tileTypeInt = type;
     }
 
-    public int tileTypeInt;
+    private final int tileTypeInt;
 
     /**
      * Returns the TileType for the given int representation of a TileType.
@@ -31,6 +31,10 @@ public enum TileType {
     public static TileType fromIntType(int type) {
         Optional<TileType> tileType = Arrays.stream(TileType.values()).filter((aTile) -> aTile.tileTypeInt == type).findFirst();
         return tileType.orElse(null);
+    }
+
+    public int getTileTypeAsInt() {
+        return tileTypeInt;
     }
 
     /**

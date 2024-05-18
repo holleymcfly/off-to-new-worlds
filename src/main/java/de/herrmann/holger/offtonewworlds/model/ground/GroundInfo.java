@@ -9,8 +9,4 @@ public abstract class GroundInfo extends TileInfo implements Savable {
     public GroundInfo(TileType type, String filename) {
         super(type, filename);
     }
-
-    public GroundInfo(TileType type, String filename, float x, float y, float z) {
-        super(type, filename, x, y, z);
-    }
 }

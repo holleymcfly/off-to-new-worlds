@@ -58,16 +58,18 @@ public class OffToNewWorlds extends SimpleApplication {
     private void initWorld() {
 
         worldAsTileIntegers = TileUtil.loadWorld();
-        for (int lineNumber=0; lineNumber< worldAsTileIntegers.length; lineNumber++) {
-            for (int columnNumber=0; columnNumber<worldAsTileIntegers[0].length; columnNumber++) {
-                int tileAsInt = worldAsTileIntegers[lineNumber][columnNumber];
+        for (int row=0; row< worldAsTileIntegers.length; row++) {
+            for (int column=0; column<worldAsTileIntegers[0].length; column++) {
+                int tileAsInt = worldAsTileIntegers[row][column];
                 TileType type = TileType.fromIntType(tileAsInt);
                 TileInfo tileInfo = TileType.getTileInfoForTileType(type);
-                tileInfo.setX(columnNumber*2f);
+                tileInfo.setX(column*2f);
                 tileInfo.setY(0f);
-                tileInfo.setZ(lineNumber*2f);
+                tileInfo.setZ(row*2f);
+                tileInfo.setRow(row);
+                tileInfo.setColumn(column);
                 Node tile = (Node) assetManager.loadModel(tileInfo.getFilename());
-                tile.move(new Vector3f(columnNumber*2f, 0, lineNumber*2f));
+                tile.move(new Vector3f(column*2f, 0, row*2f));
                 builderHelper.addUserDataToNode(tile, Constants.USER_DATA, tileInfo);
                 rootNode.attachChild(tile);
             }
@@ -103,5 +105,13 @@ public class OffToNewWorlds extends SimpleApplication {
 
     public BuilderHelper getBuilderHelper() {
         return builderHelper;
+    }
+
+    /**
+     * If the given tile shall be set to the world, we have to update the world map.
+     * Note: This method only updates the world map, and doesn't set the tile to the corresponding node.
+     */
+    public void setTileToWorldMap(TileInfo tile) {
+        worldAsTileIntegers[tile.getRow()][tile.getColumn()] = tile.getType().getTileTypeAsInt();
     }
 }

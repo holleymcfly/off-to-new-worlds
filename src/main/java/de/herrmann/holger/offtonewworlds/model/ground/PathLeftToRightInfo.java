@@ -10,10 +10,6 @@ public class PathLeftToRightInfo extends GroundInfo implements Savable {
         super(TileType.PathLeftToRight, "assets/ground/pathLR.glb");
     }
 
-    public PathLeftToRightInfo(float x, float y, float z) {
-        super(TileType.PathLeftToRight, "assets/ground/pathLR.glb", x, y, z);
-    }
-
     /**
      * A simple path can only be built on grass.
      */
