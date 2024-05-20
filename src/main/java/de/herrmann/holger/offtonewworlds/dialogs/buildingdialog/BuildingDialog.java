@@ -2,6 +2,7 @@ package de.herrmann.holger.offtonewworlds.dialogs.buildingdialog;
 
 import de.herrmann.holger.offtonewworlds.core.OffToNewWorlds;
 import de.herrmann.holger.offtonewworlds.model.ground.PathEastToWestInfo;
+import de.herrmann.holger.offtonewworlds.model.ground.PathNorthToEastInfo;
 import de.herrmann.holger.offtonewworlds.model.ground.PathNorthToSouthInfo;
 import de.lessvoid.nifty.builder.*;
 
@@ -124,7 +125,7 @@ public class BuildingDialog extends ScreenBuilder {
                         }});
 
                         text(new TextBuilder() {{
-                            text("Pfad von West nach Ost");
+                            text(PathNorthToEastInfo.getShortDescription());
 
                             width("64px");
                             height("20px");
@@ -147,7 +148,30 @@ public class BuildingDialog extends ScreenBuilder {
                         }});
 
                         text(new TextBuilder() {{
-                            text("Pfad von Nord nach Süd");
+                            text(PathNorthToSouthInfo.getShortDescription());
+
+                            width("64px");
+                            height("20px");
+                            alignCenter();
+
+                            font("aurulent-sans-16.fnt");
+                            color("#000");
+                        }});
+
+                        image(new ImageBuilder() {{
+                            filename("assets/icons/button_pathNorthEast.png");
+
+                            width("64px");
+                            height("32px");
+                            marginTop("30px");
+                            alignCenter();
+
+                            visibleToMouse(true);
+                            interactOnClick("selectTile(PathNorthToEast)");
+                        }});
+
+                        text(new TextBuilder() {{
+                            text(PathEastToWestInfo.getShortDescription());
 
                             width("64px");
                             height("20px");
@@ -265,6 +289,29 @@ public class BuildingDialog extends ScreenBuilder {
 
                             text(new TextBuilder() {{
                                 text(PathNorthToSouthInfo.getDescription());
+
+                                width("100%");
+                                height("84px");
+                                marginTop("20px");
+
+                                alignLeft();
+                                valignCenter();
+                                wrap(true);
+                                font("aurulent-sans-16.fnt");
+                                color("#000");
+                            }});
+                        }});
+
+                        panel(new PanelBuilder("pathNorthToEastDescription") {{
+
+                            width("100%");
+
+                            visible(false);
+                            childLayoutVertical();
+                            valignCenter();
+
+                            text(new TextBuilder() {{
+                                text(PathNorthToEastInfo.getDescription());
 
                                 width("100%");
                                 height("84px");

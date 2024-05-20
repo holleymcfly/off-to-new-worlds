@@ -19,6 +19,13 @@ public class PathNorthToSouthInfo extends GroundInfo implements Savable {
     }
 
     /**
+     * Returns the short description for this tile.
+     */
+    public static String getShortDescription() {
+        return "Pfad von Nord nach Süd.";
+    }
+
+    /**
      * Returns the description for this tile.
      */
     public static String getDescription() {
