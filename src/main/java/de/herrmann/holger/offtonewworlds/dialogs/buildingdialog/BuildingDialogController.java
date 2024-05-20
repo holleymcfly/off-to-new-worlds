@@ -51,7 +51,9 @@ public class BuildingDialogController extends BaseAppState implements ScreenCont
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "groundSelection", true);
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "buildingSelection", false);
 
-        Util.setVisibility(application, DialogId.BuildingDialog.name(), "groundDescription", true);
+        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathEastToWestDescription", true);
+        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathNorthToSouthDescription", true);
+
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "buildingDescription", false);
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "buildingDescription2", false);
 
@@ -63,7 +65,9 @@ public class BuildingDialogController extends BaseAppState implements ScreenCont
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "groundSelection", false);
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "buildingSelection", true);
 
-        Util.setVisibility(application, DialogId.BuildingDialog.name(), "groundDescription", false);
+        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathEastToWestDescription", false);
+        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathNorthToSouthDescription", false);
+
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "buildingDescription", true);
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "buildingDescription2", true);
     }

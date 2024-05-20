@@ -2,6 +2,7 @@ package de.herrmann.holger.offtonewworlds.dialogs.buildingdialog;
 
 import de.herrmann.holger.offtonewworlds.core.OffToNewWorlds;
 import de.herrmann.holger.offtonewworlds.model.ground.PathEastToWestInfo;
+import de.herrmann.holger.offtonewworlds.model.ground.PathNorthToSouthInfo;
 import de.lessvoid.nifty.builder.*;
 
 import javax.annotation.Nonnull;
@@ -132,6 +133,29 @@ public class BuildingDialog extends ScreenBuilder {
                             font("aurulent-sans-16.fnt");
                             color("#000");
                         }});
+
+                        image(new ImageBuilder() {{
+                            filename("assets/icons/button_pathNorthSouth.png");
+
+                            width("64px");
+                            height("32px");
+                            marginTop("30px");
+                            alignCenter();
+
+                            visibleToMouse(true);
+                            interactOnClick("selectTile(PathNorthToSouth)");
+                        }});
+
+                        text(new TextBuilder() {{
+                            text("Pfad von Nord nach Süd");
+
+                            width("64px");
+                            height("20px");
+                            alignCenter();
+
+                            font("aurulent-sans-16.fnt");
+                            color("#000");
+                        }});
                     }});
 
                     panel(new PanelBuilder("buildingSelection") {{
@@ -208,7 +232,7 @@ public class BuildingDialog extends ScreenBuilder {
                         width("90%");
                         childLayoutVertical();
 
-                        panel(new PanelBuilder("groundDescription") {{
+                        panel(new PanelBuilder("pathEastToWestDescription") {{
 
                             width("100%");
 
@@ -218,6 +242,29 @@ public class BuildingDialog extends ScreenBuilder {
 
                             text(new TextBuilder() {{
                                 text(PathEastToWestInfo.getDescription());
+
+                                width("100%");
+                                height("84px");
+                                marginTop("20px");
+
+                                alignLeft();
+                                valignCenter();
+                                wrap(true);
+                                font("aurulent-sans-16.fnt");
+                                color("#000");
+                            }});
+                        }});
+
+                        panel(new PanelBuilder("pathNorthToSouthDescription") {{
+
+                            width("100%");
+
+                            visible(false);
+                            childLayoutVertical();
+                            valignCenter();
+
+                            text(new TextBuilder() {{
+                                text(PathNorthToSouthInfo.getDescription());
 
                                 width("100%");
                                 height("84px");
