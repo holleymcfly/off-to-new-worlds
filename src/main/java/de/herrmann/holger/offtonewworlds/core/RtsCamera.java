@@ -34,7 +34,7 @@ import java.nio.IntBuffer;
 
 /**
  * Real time strategy camera.
- * Scrolls to the left, right, up and down when the mouse moves near the borders.
+ * Scrolls to the east, west, north and south when the mouse moves near the borders.
  * Scrolls into / out from the view using the mouse wheel.
  * Rotates when holding the middle mouse button and moving the mouse.
  */
@@ -80,13 +80,13 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
 
     private final String BACK = "Back";
     private final String FORWARD = "Forward";
-    private final String LEFT = "Left";
-    private final String RIGHT = "Rigjt";
+    private final String WEST = "West";
+    private final String EAST = "East";
     private final String MOUSE_MIDDLE = "MouseMiddleClick";
     private final String MOUSE_LEFT_CLICK = "MouseLeftClick";
     private final String MOUSE_RIGHT_CLICK = "MouseRightClick";
-    private final String UP = "Up";
-    private final String DOWN = "DOWN";
+    private final String NORTH = "North";
+    private final String SOUTH = "South";
 
     private final JmeCursor buildOkCursor;
     private final JmeCursor buildNotOkCursor;
@@ -156,11 +156,11 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
         inputManager.addMapping(MOUSE_RIGHT_CLICK, new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
         inputManager.addListener(this, FORWARD, BACK, MOUSE_MIDDLE, MOUSE_LEFT_CLICK, MOUSE_RIGHT_CLICK);
 
-        inputManager.addMapping(LEFT, new MouseAxisTrigger(MouseInput.AXIS_X, true));
-        inputManager.addMapping(RIGHT, new MouseAxisTrigger(MouseInput.AXIS_X, false));
-        inputManager.addMapping(UP, new MouseAxisTrigger(MouseInput.AXIS_Y, true));
-        inputManager.addMapping(DOWN, new MouseAxisTrigger(MouseInput.AXIS_Y, false));
-        inputManager.addListener(this, LEFT, RIGHT, UP, DOWN);
+        inputManager.addMapping(WEST, new MouseAxisTrigger(MouseInput.AXIS_X, true));
+        inputManager.addMapping(EAST, new MouseAxisTrigger(MouseInput.AXIS_X, false));
+        inputManager.addMapping(NORTH, new MouseAxisTrigger(MouseInput.AXIS_Y, true));
+        inputManager.addMapping(SOUTH, new MouseAxisTrigger(MouseInput.AXIS_Y, false));
+        inputManager.addListener(this, WEST, EAST, NORTH, SOUTH);
     }
 
     @Override
@@ -186,8 +186,8 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     @Override
     public void update(float tpf) {
 
-        checkLeftRightMovement();
-        checkUpDownMovement();
+        checkEastWestMovement();
+        checkNorthSouthMovement();
 
         float tpfOriginal = tpf;
 
@@ -272,7 +272,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     /**
      * Sets the direction flag if the cursor is on the left or right side of the screen.
      */
-    private void checkLeftRightMovement() {
+    private void checkEastWestMovement() {
 
         if (inputManager.getCursorPosition().x > cam.getWidth() - 20) {
             direction[SIDE] = 1;
@@ -288,7 +288,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     /**
      * Sets the direction flag if the cursor is on the upper or bottom side of the screen.
      */
-    private void checkUpDownMovement() {
+    private void checkNorthSouthMovement() {
 
         if (inputManager.getCursorPosition().y < 20) {
             direction[FWD] = 1;
@@ -431,17 +431,17 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     public void onAnalog(String name, float value, float tpf) {
 
         if (middleMouseButtonClicked) {
-            if (name.equals(UP)) {
+            if (name.equals(NORTH)) {
                 direction[TILT] = 1;
             }
-            else if (name.equals(DOWN)) {
+            else if (name.equals(SOUTH)) {
                 direction[TILT] = -1;
             }
 
-            if (name.equals(RIGHT)) {
+            if (name.equals(EAST)) {
                 direction[ROTATE] = 1;
             }
-            else if (name.equals(LEFT)) {
+            else if (name.equals(WEST)) {
                 direction[ROTATE] = -1;
             }
         }

@@ -2,7 +2,7 @@ package de.herrmann.holger.offtonewworlds.model;
 
 import de.herrmann.holger.offtonewworlds.model.building.BuildingInfo;
 import de.herrmann.holger.offtonewworlds.model.ground.GrassInfo;
-import de.herrmann.holger.offtonewworlds.model.ground.PathLeftToRightInfo;
+import de.herrmann.holger.offtonewworlds.model.ground.PathEastToWestInfo;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -14,7 +14,7 @@ public enum TileType {
 
     // Ground tiles
     Grass(1),
-    PathLeftToRight(2),
+    PathEastToWest(2),
 
     // Buildings
     Building(10);
@@ -44,7 +44,7 @@ public enum TileType {
 
         return switch (type) {
             case Grass -> new GrassInfo();
-            case PathLeftToRight -> new PathLeftToRightInfo();
+            case PathEastToWest -> new PathEastToWestInfo();
             case Building -> new BuildingInfo();
         };
     }

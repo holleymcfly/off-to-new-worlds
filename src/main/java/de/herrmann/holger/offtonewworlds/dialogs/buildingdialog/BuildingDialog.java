@@ -1,6 +1,7 @@
 package de.herrmann.holger.offtonewworlds.dialogs.buildingdialog;
 
 import de.herrmann.holger.offtonewworlds.core.OffToNewWorlds;
+import de.herrmann.holger.offtonewworlds.model.ground.PathEastToWestInfo;
 import de.lessvoid.nifty.builder.*;
 
 import javax.annotation.Nonnull;
@@ -15,65 +16,79 @@ public class BuildingDialog extends ScreenBuilder {
 
     private void buildUserInterface() {
 
-        layer(new LayerBuilder("forground") {{
+        layer(new LayerBuilder("foreground") {{
 
             childLayoutCenter();
 
-            panel(new PanelBuilder("innerPanelBuildingDialog") {{
+            panel(new PanelBuilder("buildingDialog") {{
 
                 width("50%");
                 height("30%");
 
                 alignCenter();
                 valignCenter();
-                backgroundColor("#954A00");
 
                 childLayoutHorizontal();
 
                 panel(new PanelBuilder("categorySelectionPanel") {{
 
-                    width("10%");
+                    width("20%");
                     height("100%");
 
-                    marginLeft("20px");
-
-                    alignLeft();
+                    alignCenter();
+                    backgroundColor("#954A00");
 
                     childLayoutVertical();
 
                     image(new ImageBuilder() {{
                         filename("assets/icons/button_grass.png");
-                        marginTop("30px");
-                        height("32px");
+
                         width("64px");
+                        height("32px");
+                        marginTop("30px");
+
+                        alignCenter();
+
                         visibleToMouse(true);
                         interactOnClick("openGroundSelection()");
                     }});
 
                     text(new TextBuilder() {{
                         text("Boden");
-                        font("aurulent-sans-16.fnt");
-                        color("#000");
+
                         width("64px");
                         height("20px");
+
+                        alignCenter();
+                        color("#000");
+                        font("aurulent-sans-16.fnt");
+
                         interactOnClick("openGroundSelection()");
                     }});
 
                     image(new ImageBuilder() {{
                         filename("assets/icons/button_menu_building.png");
-                        marginTop("30px");
-                        height("64px");
+
                         width("64px");
+                        height("64px");
+                        marginTop("30px");
+
+                        alignCenter();
+
                         visibleToMouse(true);
                         interactOnClick("openBuildingSelection()");
                     }});
 
                     text(new TextBuilder() {{
                         text("Wohngebäude");
-                        font("aurulent-sans-16.fnt");
-                        color("#000");
+
                         width("64px");
                         height("20px");
+
+                        alignCenter();
+                        color("#000");
+                        font("aurulent-sans-16.fnt");
+
                         interactOnClick("openBuildingSelection()");
                     }});
                 }});
@@ -83,8 +98,7 @@ public class BuildingDialog extends ScreenBuilder {
                     width("20%");
                     height("100%");
 
-                    marginLeft("20px");
-
+                    backgroundColor("#FDCE2D");
                     alignLeft();
 
                     childLayoutAbsoluteInside();
@@ -94,26 +108,29 @@ public class BuildingDialog extends ScreenBuilder {
                         width("100%");
 
                         visible(false);
-
                         childLayoutVertical();
 
                         image(new ImageBuilder() {{
-                            alignCenter();
-                            filename("assets/icons/button_pathLR.png");
-                            marginTop("30px");
-                            height("32px");
+                            filename("assets/icons/button_pathEastWest.png");
+
                             width("64px");
+                            height("32px");
+                            marginTop("30px");
+                            alignCenter();
+
                             visibleToMouse(true);
-                            interactOnClick("selectTile(PathLeftToRight)");
+                            interactOnClick("selectTile(PathEastToWest)");
                         }});
 
                         text(new TextBuilder() {{
-                            alignCenter();
-                            text("Pfad von links nach rechts");
-                            font("aurulent-sans-16.fnt");
-                            color("#000");
+                            text("Pfad von West nach Ost");
+
                             width("64px");
                             height("20px");
+                            alignCenter();
+
+                            font("aurulent-sans-16.fnt");
+                            color("#000");
                         }});
                     }});
 
@@ -126,56 +143,69 @@ public class BuildingDialog extends ScreenBuilder {
                         childLayoutVertical();
 
                         image(new ImageBuilder() {{
-                            alignCenter();
                             filename("assets/icons/button_menu_building.png");
-                            marginTop("30px");
-                            height("64px");
+
                             width("64px");
+                            height("64px");
+                            marginTop("30px");
+
+                            alignCenter();
+
                             visibleToMouse(true);
                             interactOnClick("selectTile(\"Building\")");
                         }});
 
                         text(new TextBuilder() {{
-                            alignCenter();
                             text("Irgendein Gebäude...");
-                            font("aurulent-sans-16.fnt");
-                            color("#000");
+
                             width("64px");
                             height("20px");
+
+                            alignCenter();
+                            font("aurulent-sans-16.fnt");
+                            color("#000");
                         }});
 
                         image(new ImageBuilder() {{
-                            alignCenter();
                             filename("assets/icons/button_menu_building.png");
-                            marginTop("30px");
-                            height("64px");
+
                             width("64px");
+                            height("64px");
+                            marginTop("30px");
+
+                            alignCenter();
+
                             visibleToMouse(true);
                             interactOnClick("selectTile(\"Building\")");
                         }});
 
                         text(new TextBuilder() {{
-                            alignCenter();
                             text("Irgendein Gebäude...");
-                            font("aurulent-sans-16.fnt");
-                            color("#000");
+
                             width("64px");
                             height("20px");
+
+                            alignCenter();
+                            font("aurulent-sans-16.fnt");
+                            color("#000");
                         }});
                     }});
                 }});
 
                 panel(new PanelBuilder("descriptionPanel") {{
 
-                    width("70%");
+                    width("60%");
                     height("100%");
 
                     alignLeft();
+                    paddingLeft("20px");
+                    backgroundColor("#FEE17E");
+
                     childLayoutAbsoluteInside();
 
                     panel(new PanelBuilder("groundDescriptionParent") {{
 
-                        width("100%");
+                        width("90%");
                         childLayoutVertical();
 
                         panel(new PanelBuilder("groundDescription") {{
@@ -183,24 +213,28 @@ public class BuildingDialog extends ScreenBuilder {
                             width("100%");
 
                             visible(false);
-
                             childLayoutVertical();
                             valignCenter();
 
                             text(new TextBuilder() {{
+                                text(PathEastToWestInfo.getDescription());
+
+                                width("100%");
+                                height("84px");
+                                marginTop("20px");
+
                                 alignLeft();
-                                marginLeft("20px");
-                                text("Beschreibung: Pfad von links nach rechts");
+                                valignCenter();
+                                wrap(true);
                                 font("aurulent-sans-16.fnt");
                                 color("#000");
-                                height("84px");
                             }});
                         }});
                     }});
 
                     panel(new PanelBuilder("buildingDescriptionParent") {{
 
-                        width("100%");
+                        width("90%");
                         childLayoutVertical();
 
                         panel(new PanelBuilder("buildingDescription") {{
@@ -213,12 +247,15 @@ public class BuildingDialog extends ScreenBuilder {
                             valignCenter();
 
                             text(new TextBuilder() {{
-                                alignLeft();
-                                marginLeft("20px");
                                 text("Beschreibung: Irgendein Gebäude...");
+
+                                width("100%");
+                                height("84px");
+                                marginTop("20px");
+
+                                alignLeft();
                                 font("aurulent-sans-16.fnt");
                                 color("#000");
-                                height("84px");
                             }});
                         }});
 
@@ -232,12 +269,15 @@ public class BuildingDialog extends ScreenBuilder {
                             valignCenter();
 
                             text(new TextBuilder() {{
-                                alignLeft();
-                                marginLeft("20px");
                                 text("Beschreibung2: Irgendein Gebäude...");
+
+                                width("100%");
+                                height("84px");
+                                marginTop("20px");
+
+                                alignLeft();
                                 font("aurulent-sans-16.fnt");
                                 color("#000");
-                                height("84px");
                             }});
                         }});
                     }});
