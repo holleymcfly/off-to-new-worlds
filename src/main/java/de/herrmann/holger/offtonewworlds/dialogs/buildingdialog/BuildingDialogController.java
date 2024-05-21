@@ -48,30 +48,19 @@ public class BuildingDialogController extends BaseAppState implements ScreenCont
     @SuppressWarnings("unused")
     public void openGroundSelection() {
 
-        Util.setVisibility(application, DialogId.BuildingDialog.name(), "groundSelection", true);
-        Util.setVisibility(application, DialogId.BuildingDialog.name(), "buildingSelection", false);
-
-        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathEastToWestDescription", true);
-        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathNorthToSouthDescription", true);
-        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathNorthToEastDescription", true);
-
-        Util.setVisibility(application, DialogId.BuildingDialog.name(), "buildingDescription", false);
-        Util.setVisibility(application, DialogId.BuildingDialog.name(), "buildingDescription2", false);
-
+        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathEastToWestPanel", true);
+        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathNorthToSouthPanel", true);
+        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathNorthToEastPanel", true);
+        Util.setVisibility(application, DialogId.BuildingDialog.name(), "building1Panel", false);
     }
 
     @SuppressWarnings("unused")
     public void openBuildingSelection() {
 
-        Util.setVisibility(application, DialogId.BuildingDialog.name(), "groundSelection", false);
-        Util.setVisibility(application, DialogId.BuildingDialog.name(), "buildingSelection", true);
-
-        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathEastToWestDescription", false);
-        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathNorthToSouthDescription", false);
-        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathNorthToEastDescription", false);
-
-        Util.setVisibility(application, DialogId.BuildingDialog.name(), "buildingDescription", true);
-        Util.setVisibility(application, DialogId.BuildingDialog.name(), "buildingDescription2", true);
+        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathEastToWestPanel", false);
+        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathNorthToSouthPanel", false);
+        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathNorthToEastPanel", false);
+        Util.setVisibility(application, DialogId.BuildingDialog.name(), "building1Panel", true);
     }
 
     /**
