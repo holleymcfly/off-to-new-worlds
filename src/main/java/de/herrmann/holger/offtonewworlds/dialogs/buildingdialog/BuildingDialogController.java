@@ -52,6 +52,7 @@ public class BuildingDialogController extends BaseAppState implements ScreenCont
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathNorthToSouthPanel", true);
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathNorthToEastPanel", true);
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathWestToNorthPanel", true);
+        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathWestToSouthPanel", true);
 
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "building1Panel", false);
     }
@@ -63,6 +64,7 @@ public class BuildingDialogController extends BaseAppState implements ScreenCont
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathNorthToSouthPanel", false);
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathNorthToEastPanel", false);
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathWestToNorthPanel", false);
+        Util.setVisibility(application, DialogId.BuildingDialog.name(), "pathWestToSouthPanel", false);
 
         Util.setVisibility(application, DialogId.BuildingDialog.name(), "building1Panel", true);
     }

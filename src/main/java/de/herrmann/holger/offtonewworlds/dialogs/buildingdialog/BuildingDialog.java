@@ -1,10 +1,7 @@
 package de.herrmann.holger.offtonewworlds.dialogs.buildingdialog;
 
 import de.herrmann.holger.offtonewworlds.core.OffToNewWorlds;
-import de.herrmann.holger.offtonewworlds.model.ground.PathNorthToEastInfo;
-import de.herrmann.holger.offtonewworlds.model.ground.PathNorthToSouthInfo;
-import de.herrmann.holger.offtonewworlds.model.ground.PathWestToEastInfo;
-import de.herrmann.holger.offtonewworlds.model.ground.PathWestToNorthInfo;
+import de.herrmann.holger.offtonewworlds.model.ground.*;
 import de.lessvoid.nifty.builder.*;
 
 import javax.annotation.Nonnull;
@@ -205,6 +202,41 @@ public class BuildingDialog extends ScreenBuilder {
 
                                 text(new TextBuilder() {{
                                     text(PathWestToNorthInfo.getDescription());
+                                    width("100%").alignLeft().valignCenter();
+                                    wrap(true);
+                                    font("aurulent-sans-16.fnt").color("#000");
+                                }});
+                            }});
+                        }});
+
+                        // Path from West to South
+                        // ************************************************
+                        panel(new PanelBuilder("pathWestToSouthPanel") {{
+                            width("100%").height("80px").marginTop("20px").paddingRight("20px").visible(false);
+                            childLayoutHorizontal();
+
+                            panel(new PanelBuilder() {{
+                                width("30%").height("52px").alignLeft().valignCenter();
+                                childLayoutVertical();
+
+                                image(new ImageBuilder() {{
+                                    filename("assets/icons/button_pathWestSouth.png");
+                                    width("64px").height("32px").alignCenter().valignTop();
+                                    visibleToMouse(true).interactOnClick("selectTile(PathWestToSouth)");
+                                }});
+                                text(new TextBuilder() {{
+                                    text(PathWestToSouthInfo.getShortDescription());
+                                    width("64px").height("20px").alignCenter().valignTop();
+                                    font("aurulent-sans-16.fnt").color("#000");
+                                }});
+                            }});
+
+                            panel(new PanelBuilder() {{
+                                width("70%").height("80px").alignRight();
+                                childLayoutHorizontal();
+
+                                text(new TextBuilder() {{
+                                    text(PathWestToSouthInfo.getDescription());
                                     width("100%").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");

@@ -17,6 +17,7 @@ public enum TileType {
     PathNorthToSouth(3),
     PathNorthToEast(4),
     PathWestToNorth(5),
+    PathWestToSouth(6),
 
     // Buildings
     Building(10);
@@ -50,6 +51,7 @@ public enum TileType {
             case PathNorthToSouth -> new PathNorthToSouthInfo();
             case PathNorthToEast -> new PathNorthToEastInfo();
             case PathWestToNorth -> new PathWestToNorthInfo();
+            case PathWestToSouth -> new PathWestToSouthInfo();
             case Building -> new BuildingInfo();
         };
     }
