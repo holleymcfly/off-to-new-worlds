@@ -1,10 +1,7 @@
 package de.herrmann.holger.offtonewworlds.model;
 
 import de.herrmann.holger.offtonewworlds.model.building.BuildingInfo;
-import de.herrmann.holger.offtonewworlds.model.ground.GrassInfo;
-import de.herrmann.holger.offtonewworlds.model.ground.PathNorthToEastInfo;
-import de.herrmann.holger.offtonewworlds.model.ground.PathNorthToSouthInfo;
-import de.herrmann.holger.offtonewworlds.model.ground.PathWestToEastInfo;
+import de.herrmann.holger.offtonewworlds.model.ground.*;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -19,6 +16,7 @@ public enum TileType {
     PathWestToEast(2),
     PathNorthToSouth(3),
     PathNorthToEast(4),
+    PathWestToNorth(5),
 
     // Buildings
     Building(10);
@@ -51,6 +49,7 @@ public enum TileType {
             case PathWestToEast -> new PathWestToEastInfo();
             case PathNorthToSouth -> new PathNorthToSouthInfo();
             case PathNorthToEast -> new PathNorthToEastInfo();
+            case PathWestToNorth -> new PathWestToNorthInfo();
             case Building -> new BuildingInfo();
         };
     }

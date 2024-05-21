@@ -4,6 +4,7 @@ import de.herrmann.holger.offtonewworlds.core.OffToNewWorlds;
 import de.herrmann.holger.offtonewworlds.model.ground.PathNorthToEastInfo;
 import de.herrmann.holger.offtonewworlds.model.ground.PathNorthToSouthInfo;
 import de.herrmann.holger.offtonewworlds.model.ground.PathWestToEastInfo;
+import de.herrmann.holger.offtonewworlds.model.ground.PathWestToNorthInfo;
 import de.lessvoid.nifty.builder.*;
 
 import javax.annotation.Nonnull;
@@ -73,7 +74,7 @@ public class BuildingDialog extends ScreenBuilder {
 
                         // Path from East to West
                         // ************************************************
-                        panel(new PanelBuilder("pathEastToWestPanel") {{
+                        panel(new PanelBuilder("pathWestToEastPanel") {{
                             width("100%").height("80px").marginTop("20px").paddingRight("20px").visible(false);
                             childLayoutHorizontal();
 
@@ -82,7 +83,7 @@ public class BuildingDialog extends ScreenBuilder {
                                 childLayoutVertical();
 
                                 image(new ImageBuilder() {{
-                                    filename("assets/icons/button_pathEastWest.png");
+                                    filename("assets/icons/button_pathWestEast.png");
                                     width("64px").height("32px").alignCenter().valignTop();
                                     visibleToMouse(true).interactOnClick("selectTile(PathWestToEast)");
                                 }});
@@ -169,6 +170,41 @@ public class BuildingDialog extends ScreenBuilder {
 
                                 text(new TextBuilder() {{
                                     text(PathNorthToEastInfo.getDescription());
+                                    width("100%").alignLeft().valignCenter();
+                                    wrap(true);
+                                    font("aurulent-sans-16.fnt").color("#000");
+                                }});
+                            }});
+                        }});
+
+                        // Path from West to North
+                        // ************************************************
+                        panel(new PanelBuilder("pathWestToNorthPanel") {{
+                            width("100%").height("80px").marginTop("20px").paddingRight("20px").visible(false);
+                            childLayoutHorizontal();
+
+                            panel(new PanelBuilder() {{
+                                width("30%").height("52px").alignLeft().valignCenter();
+                                childLayoutVertical();
+
+                                image(new ImageBuilder() {{
+                                    filename("assets/icons/button_pathWestNorth.png");
+                                    width("64px").height("32px").alignCenter().valignTop();
+                                    visibleToMouse(true).interactOnClick("selectTile(PathWestToNorth)");
+                                }});
+                                text(new TextBuilder() {{
+                                    text(PathWestToNorthInfo.getShortDescription());
+                                    width("64px").height("20px").alignCenter().valignTop();
+                                    font("aurulent-sans-16.fnt").color("#000");
+                                }});
+                            }});
+
+                            panel(new PanelBuilder() {{
+                                width("70%").height("80px").alignRight();
+                                childLayoutHorizontal();
+
+                                text(new TextBuilder() {{
+                                    text(PathWestToNorthInfo.getDescription());
                                     width("100%").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");

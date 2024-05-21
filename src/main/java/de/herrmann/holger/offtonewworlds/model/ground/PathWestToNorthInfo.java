@@ -4,10 +4,10 @@ import com.jme3.export.Savable;
 import de.herrmann.holger.offtonewworlds.model.TileInfo;
 import de.herrmann.holger.offtonewworlds.model.TileType;
 
-public class PathWestToEastInfo extends GroundInfo implements Savable {
+public class PathWestToNorthInfo extends GroundInfo implements Savable {
 
-    public PathWestToEastInfo() {
-        super(TileType.PathWestToEast, "assets/ground/pathWestEast.glb");
+    public PathWestToNorthInfo() {
+        super(TileType.PathWestToNorth, "assets/ground/pathWestNorth.glb");
     }
 
     /**
@@ -22,16 +22,13 @@ public class PathWestToEastInfo extends GroundInfo implements Savable {
      * Returns the short description for this tile.
      */
     public static String getShortDescription() {
-        return "Pfad von West nach Ost.";
+        return "Pfad von West nach Nord.";
     }
 
     /**
      * Returns the description for this tile.
      */
     public static String getDescription() {
-       return "Ein Pfad ist die minimale Voraussetzung dafür, dass Waren und Rohstoffe von Lagern und " +
-               "Produktionsstätten zum Zielort transportiert werden können. " +
-               "Pfade können kostenlos getauscht werden: Wird z.B. anstelle eines Pfades von Ost nach West ein Pfad " +
-               "mit drei Ausgängen benötigt, kann der bisherige Pfad kostenlos ersetzt werden.";
+       return "Ein Pfad, der von Westen in den Norden führt.";
     }
 }

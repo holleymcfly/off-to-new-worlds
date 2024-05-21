@@ -186,7 +186,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     @Override
     public void update(float tpf) {
 
-        checkEastWestMovement();
+        checkWestEastMovement();
         checkNorthSouthMovement();
 
         float tpfOriginal = tpf;
@@ -272,7 +272,7 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     /**
      * Sets the direction flag if the cursor is on the left or right side of the screen.
      */
-    private void checkEastWestMovement() {
+    private void checkWestEastMovement() {
 
         if (inputManager.getCursorPosition().x > cam.getWidth() - 20) {
             direction[SIDE] = 1;
