@@ -22,6 +22,8 @@ public class BuildingDialog extends ScreenBuilder {
         nifty.loadControlFile("nifty-default-controls.xml");
         nifty.loadStyleFile("nifty-default-styles.xml");
 
+        nifty.loadStyleFile("assets/nifty-gui/nifty-custom-styles.xml");
+
         layer(new LayerBuilder("foreground") {{
             childLayoutCenter();
 

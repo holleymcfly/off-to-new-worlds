@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty-styles xmlns="http://nifty-gui.lessvoid.com/nifty-gui">
+    <useStyles filename="assets/nifty-gui/scrollbar/nifty-scrollbar-style.xml"/>
+</nifty-styles>
