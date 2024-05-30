@@ -32,7 +32,7 @@ public class BuildingDialog extends ScreenBuilder {
                 // Selection of category on the left hand side
                 // *************************************************************************************
                 panel(new PanelBuilder("categorySelection") {{
-                    width("150px").height("100%").backgroundColor("#5E2F00");
+                    width("150px").height("400px").backgroundColor("#5E2F00");
                     childLayoutVertical();
 
                     image(new ImageBuilder() {{
@@ -267,8 +267,8 @@ public class BuildingDialog extends ScreenBuilder {
 
                     panel(new PanelBuilder() {{
 
-                        width("850px");
-                        childLayoutVertical().backgroundColor("#954A00");
+                        width("850px").backgroundColor("#954A00");
+                        childLayoutVertical();
 
                         // Building 1
                         // ************************************************
