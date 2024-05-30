@@ -35,7 +35,7 @@ public class DisplaySettings {
         AppSettings appSettings = OffToNewWorldsSettings.get().getAppSettings();
 
         appSettings.setResolution(width, height);
-        appSettings.setFullscreen(true);
+        appSettings.setFullscreen(false);
 
         offToNewWorlds.setSettings(appSettings);
     }

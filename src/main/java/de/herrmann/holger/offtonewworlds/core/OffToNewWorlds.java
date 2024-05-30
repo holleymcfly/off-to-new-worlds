@@ -34,6 +34,9 @@ public class OffToNewWorlds extends SimpleApplication {
         if (!Util.isDebugging()) {
             OffToNewWorldsSettings.get().getDisplaySettings().setToFullScreenWindows(offToNewWorlds);
         }
+        else {
+            OffToNewWorldsSettings.get().getDisplaySettings().setToResolution(1000, 600, offToNewWorlds);
+        }
         offToNewWorlds.start();
     }
 
