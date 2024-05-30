@@ -2,32 +2,37 @@ package de.herrmann.holger.offtonewworlds.dialogs.buildingdialog;
 
 import de.herrmann.holger.offtonewworlds.core.OffToNewWorlds;
 import de.herrmann.holger.offtonewworlds.model.ground.*;
+import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.builder.*;
+import de.lessvoid.nifty.controls.scrollpanel.builder.ScrollPanelBuilder;
 
 import javax.annotation.Nonnull;
 
 public class BuildingDialog extends ScreenBuilder {
 
-    public BuildingDialog(@Nonnull String id, OffToNewWorlds application) {
+    public BuildingDialog(@Nonnull String id, OffToNewWorlds application, Nifty nifty) {
         super(id);
         controller(new BuildingDialogController(application));
-        buildUserInterface();
+        buildUserInterface(nifty);
     }
 
-    private void buildUserInterface() {
+    private void buildUserInterface(Nifty nifty) {
+
+        nifty.loadControlFile("nifty-default-controls.xml");
+        nifty.loadStyleFile("nifty-default-styles.xml");
 
         layer(new LayerBuilder("foreground") {{
             childLayoutCenter();
 
             panel(new PanelBuilder("buildingDialog") {{
-                width("50%").height("40%");
-                childLayoutHorizontal();
+                width("1000px").height("400px");
+                childLayoutAbsoluteInside();
 
                 // *************************************************************************************
                 // Selection of category on the left hand side
                 // *************************************************************************************
                 panel(new PanelBuilder("categorySelection") {{
-                    width("20%").height("100%").backgroundColor("#5E2F00");
+                    width("150px").height("100%").backgroundColor("#5E2F00");
                     childLayoutVertical();
 
                     image(new ImageBuilder() {{
@@ -60,23 +65,27 @@ public class BuildingDialog extends ScreenBuilder {
                 // *************************************************************************************
                 // Scroll panel with tiles on the right hand side.
                 // *************************************************************************************
-                panel(new PanelBuilder("tileSelectionPanel") {{
-                    width("80%").height("100%").backgroundColor("#954A00");
-                    childLayoutAbsoluteInside();
+                control(new ScrollPanelBuilder("groundSelectionPanel") {{
+
+                    set("vertical", "true");
+                    set("horizontal", "false");
+                    x("150px").width("850px").height("400px");
+
+                    childLayoutVertical();
 
                     panel(new PanelBuilder() {{
 
-                        width("100%");
+                        width("850px").backgroundColor("#954A00");
                         childLayoutVertical();
 
                         // Path from East to West
                         // ************************************************
                         panel(new PanelBuilder("pathWestToEastPanel") {{
-                            width("100%").height("80px").marginTop("20px").paddingRight("20px").visible(false);
+                            width("850px").height("80px").marginTop("20px").paddingRight("20px");
                             childLayoutHorizontal();
 
                             panel(new PanelBuilder() {{
-                                width("30%").height("52px").alignLeft().valignCenter();
+                                width("200px").height("52px").alignLeft().valignCenter();
                                 childLayoutVertical();
 
                                 image(new ImageBuilder() {{
@@ -92,12 +101,12 @@ public class BuildingDialog extends ScreenBuilder {
                             }});
 
                             panel(new PanelBuilder() {{
-                                width("70%").height("80px").alignRight();
+                                width("650px").height("80px").alignRight();
                                 childLayoutHorizontal();
 
                                 text(new TextBuilder() {{
                                     text(PathWestToEastInfo.getDescription());
-                                    width("100%").height("52px").alignLeft().valignCenter();
+                                    width("600px").height("52px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
                                 }});
@@ -107,11 +116,11 @@ public class BuildingDialog extends ScreenBuilder {
                         // Path from North to South
                         // ************************************************
                         panel(new PanelBuilder("pathNorthToSouthPanel") {{
-                            width("100%").height("80px").marginTop("20px").paddingRight("20px").visible(false);
+                            width("850px").height("80px").marginTop("20px").paddingRight("20px");
                             childLayoutHorizontal();
 
                             panel(new PanelBuilder() {{
-                                width("30%").height("52px").alignLeft().valignCenter();
+                                width("200px").height("52px").alignLeft().valignCenter();
                                 childLayoutVertical();
 
                                 image(new ImageBuilder() {{
@@ -127,12 +136,12 @@ public class BuildingDialog extends ScreenBuilder {
                             }});
 
                             panel(new PanelBuilder() {{
-                                width("70%").height("80px").alignRight();
+                                width("650px").height("80px").alignRight();
                                 childLayoutHorizontal();
 
                                 text(new TextBuilder() {{
                                     text(PathNorthToSouthInfo.getDescription());
-                                    width("100%").alignLeft().valignCenter();
+                                    width("600px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
                                 }});
@@ -142,11 +151,11 @@ public class BuildingDialog extends ScreenBuilder {
                         // Path from North to East
                         // ************************************************
                         panel(new PanelBuilder("pathNorthToEastPanel") {{
-                            width("100%").height("80px").marginTop("20px").paddingRight("20px").visible(false);
+                            width("850px").height("80px").marginTop("20px").paddingRight("20px");
                             childLayoutHorizontal();
 
                             panel(new PanelBuilder() {{
-                                width("30%").height("52px").alignLeft().valignCenter();
+                                width("200px").height("52px").alignLeft().valignCenter();
                                 childLayoutVertical();
 
                                 image(new ImageBuilder() {{
@@ -162,12 +171,12 @@ public class BuildingDialog extends ScreenBuilder {
                             }});
 
                             panel(new PanelBuilder() {{
-                                width("70%").height("80px").alignRight();
+                                width("650px").height("80px").alignRight();
                                 childLayoutHorizontal();
 
                                 text(new TextBuilder() {{
                                     text(PathNorthToEastInfo.getDescription());
-                                    width("100%").alignLeft().valignCenter();
+                                    width("600px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
                                 }});
@@ -177,11 +186,11 @@ public class BuildingDialog extends ScreenBuilder {
                         // Path from West to North
                         // ************************************************
                         panel(new PanelBuilder("pathWestToNorthPanel") {{
-                            width("100%").height("80px").marginTop("20px").paddingRight("20px").visible(false);
+                            width("850px").height("80px").marginTop("20px").paddingRight("20px");
                             childLayoutHorizontal();
 
                             panel(new PanelBuilder() {{
-                                width("30%").height("52px").alignLeft().valignCenter();
+                                width("200px").height("52px").alignLeft().valignCenter();
                                 childLayoutVertical();
 
                                 image(new ImageBuilder() {{
@@ -197,12 +206,12 @@ public class BuildingDialog extends ScreenBuilder {
                             }});
 
                             panel(new PanelBuilder() {{
-                                width("70%").height("80px").alignRight();
+                                width("650px").height("80px").alignRight();
                                 childLayoutHorizontal();
 
                                 text(new TextBuilder() {{
                                     text(PathWestToNorthInfo.getDescription());
-                                    width("100%").alignLeft().valignCenter();
+                                    width("600px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
                                 }});
@@ -212,11 +221,11 @@ public class BuildingDialog extends ScreenBuilder {
                         // Path from West to South
                         // ************************************************
                         panel(new PanelBuilder("pathWestToSouthPanel") {{
-                            width("100%").height("80px").marginTop("20px").paddingRight("20px").visible(false);
+                            width("850px").height("80px").marginTop("20px").paddingRight("20px");
                             childLayoutHorizontal();
 
                             panel(new PanelBuilder() {{
-                                width("30%").height("52px").alignLeft().valignCenter();
+                                width("200px").height("52px").alignLeft().valignCenter();
                                 childLayoutVertical();
 
                                 image(new ImageBuilder() {{
@@ -232,32 +241,43 @@ public class BuildingDialog extends ScreenBuilder {
                             }});
 
                             panel(new PanelBuilder() {{
-                                width("70%").height("80px").alignRight();
+                                width("650px").height("80px").alignRight();
                                 childLayoutHorizontal();
 
                                 text(new TextBuilder() {{
                                     text(PathWestToSouthInfo.getDescription());
-                                    width("100%").alignLeft().valignCenter();
+                                    width("600px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
                                 }});
                             }});
                         }});
                     }});
+                }});
+
+                control(new ScrollPanelBuilder("buildingSelectionPanel") {{
+
+                    visible(false);
+
+                    set("vertical", "true");
+                    set("horizontal", "false");
+                    x("150px").width("850px").height("400px");
+
+                    childLayoutVertical();
 
                     panel(new PanelBuilder() {{
 
-                        width("100%");
-                        childLayoutVertical();
+                        width("850px");
+                        childLayoutVertical().backgroundColor("#954A00");
 
                         // Building 1
                         // ************************************************
                         panel(new PanelBuilder("building1Panel") {{
-                            width("100%").height("80px").marginTop("20px").paddingRight("20px").visible(false);
+                            width("850px").height("80px").marginTop("20px").paddingRight("20px");
                             childLayoutHorizontal();
 
                             panel(new PanelBuilder() {{
-                                width("30%").height("52px").alignLeft().valignCenter();
+                                width("200px").height("52px").alignLeft().valignCenter();
                                 childLayoutVertical();
 
                                 image(new ImageBuilder() {{
@@ -273,12 +293,12 @@ public class BuildingDialog extends ScreenBuilder {
                             }});
 
                             panel(new PanelBuilder() {{
-                                width("70%").height("80px").alignRight();
+                                width("650px").height("80px").alignRight();
                                 childLayoutHorizontal();
 
                                 text(new TextBuilder() {{
                                     text("Building 1");
-                                    width("100%").alignLeft().valignCenter();
+                                    width("600px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
                                 }});

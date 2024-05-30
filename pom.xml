@@ -41,7 +41,16 @@
             <artifactId>jme3-niftygui</artifactId>
             <version>3.6.1-stable</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.nifty-gui</groupId>
+            <artifactId>nifty-default-controls</artifactId>
+            <version>1.4.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.nifty-gui</groupId>
+            <artifactId>nifty-style-black</artifactId>
+            <version>1.4.3</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -53,7 +53,7 @@ public class TopLeftMenuController extends BaseAppState implements ScreenControl
         Nifty nifty = niftyDisplay.getNifty();
 
         nifty.addScreen(DialogId.BuildingDialog.name(), new BuildingDialog(DialogId.BuildingDialog.name(),
-                application).build(nifty));
+                application, nifty).build(nifty));
         nifty.gotoScreen(DialogId.BuildingDialog.name());
 
         application.getGuiViewPort().addProcessor(niftyDisplay);
