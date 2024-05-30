@@ -1,6 +1,7 @@
 package de.herrmann.holger.offtonewworlds.dialogs.buildingdialog;
 
 import de.herrmann.holger.offtonewworlds.core.OffToNewWorlds;
+import de.herrmann.holger.offtonewworlds.dialogs.MyScrollPanelControl;
 import de.herrmann.holger.offtonewworlds.model.ground.*;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.builder.*;
@@ -67,8 +68,9 @@ public class BuildingDialog extends ScreenBuilder {
                 // *************************************************************************************
                 control(new ScrollPanelBuilder("groundSelectionPanel") {{
 
-                    set("vertical", "true");
-                    set("horizontal", "false");
+                    controller(new MyScrollPanelControl());
+
+                    set("vertical", "true").set("horizontal", "false");
                     x("150px").width("850px").height("400px");
 
                     childLayoutVertical();
@@ -257,10 +259,11 @@ public class BuildingDialog extends ScreenBuilder {
 
                 control(new ScrollPanelBuilder("buildingSelectionPanel") {{
 
+                    controller(new MyScrollPanelControl());
+
                     visible(false);
 
-                    set("vertical", "true");
-                    set("horizontal", "false");
+                    set("vertical", "true").set("horizontal", "false");
                     x("150px").width("850px").height("400px");
 
                     childLayoutVertical();
