@@ -109,7 +109,7 @@ public class Util {
         nifty.gotoScreen(screenId);
 
         application.getGuiViewPort().addProcessor(niftyDisplay);
-        DialogsHelper.addModalDialog(screenId, dialog);
+        DialogsHelper.addModalDialog(dialog);
     }
 
     /**
@@ -127,6 +127,6 @@ public class Util {
             }
         }
 
-        DialogsHelper.removeDialogById(dialogId);
+        DialogsHelper.removeModalDialogById(dialogId);
     }
 }

@@ -12,9 +12,16 @@ import javax.annotation.Nonnull;
  */
 public abstract class MyScreenBuilder extends ScreenBuilder {
 
+    private final String id;
+
     public MyScreenBuilder(@Nonnull String id) {
         super(id);
+        this.id = id;
     }
 
     public abstract void create(Nifty nifty);
+
+    public String getId() {
+        return id;
+    }
 }

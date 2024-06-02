@@ -69,4 +69,9 @@ public class BuildingDialogController extends BaseAppState implements ScreenCont
         application.getBuilderHelper().setTileTypeToBeBuilt(TileType.valueOf(buildInfo));
         Util.removeDialogById(application, DialogId.BuildingDialog.name());
     }
+
+    @SuppressWarnings("unused")
+    public void closeDialog() {
+        Util.removeDialogById(application, DialogId.BuildingDialog.name());
+    }
 }

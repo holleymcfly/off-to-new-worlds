@@ -363,6 +363,11 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     public void onAction(String name, boolean isPressed, float tpf) {
 
         if (DialogsHelper.isModalDialogOpen()) {
+
+            if (MOUSE_RIGHT_CLICK.equals(name)) {
+                Util.removeDialogById(application, DialogsHelper.getLatestModalDialogId());
+            }
+
             return;
         }
 

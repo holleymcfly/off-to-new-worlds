@@ -39,37 +39,40 @@ public class BuildingDialog extends MyScreenBuilder {
                 width("1000px").height("400px");
                 childLayoutAbsoluteInside();
 
+                visibleToMouse().interactOnSecondaryClick("closeDialog()");
+
                 // *************************************************************************************
                 // Selection of category on the left hand side
                 // *************************************************************************************
                 panel(new PanelBuilder("categorySelection") {{
                     width("150px").height("400px").backgroundColor("#5E2F00");
                     childLayoutVertical();
+                    visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                     image(new ImageBuilder() {{
                         filename("assets/icons/button_grass.png");
                         width("64px").height("32px").marginTop("30px").alignCenter();
-                        visibleToMouse(true).interactOnClick("openGroundSelection()");
+                        visibleToMouse().interactOnClick("openGroundSelection()").interactOnSecondaryClick("closeDialog()");
                     }});
 
                     text(new TextBuilder() {{
                         text("Boden");
                         width("64px").height("20px").alignCenter();
                         font("aurulent-sans-16.fnt").color("#000");
-                        interactOnClick("openGroundSelection()");
+                        visibleToMouse().interactOnClick("openGroundSelection()").interactOnSecondaryClick("closeDialog()");
                     }});
 
                     image(new ImageBuilder() {{
                         filename("assets/icons/button_menu_building.png");
                         width("64px").height("64px").marginTop("30px").alignCenter();
-                        visibleToMouse(true).interactOnClick("openBuildingSelection()");
+                        visibleToMouse().interactOnClick("openBuildingSelection()").interactOnSecondaryClick("closeDialog()");
                     }});
 
                     text(new TextBuilder() {{
                         text("Wohngebäude");
                         width("64px").height("20px").alignCenter();
                         font("aurulent-sans-16.fnt").color("#000");
-                        interactOnClick("openBuildingSelection()");
+                        visibleToMouse().interactOnClick("openBuildingSelection()").interactOnSecondaryClick("closeDialog()");
                     }});
                 }});
 
@@ -95,32 +98,37 @@ public class BuildingDialog extends MyScreenBuilder {
                         panel(new PanelBuilder("pathWestToEastPanel") {{
                             width("850px").height("80px").marginTop("20px").paddingRight("20px");
                             childLayoutHorizontal();
+                            visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                             panel(new PanelBuilder() {{
                                 width("200px").height("52px").alignLeft().valignCenter();
                                 childLayoutVertical();
+                                visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                                 image(new ImageBuilder() {{
                                     filename("assets/icons/button_pathWE.png");
                                     width("64px").height("32px").alignCenter().valignTop();
-                                    visibleToMouse(true).interactOnClick("selectTile(PathWE)");
+                                    visibleToMouse().interactOnClick("selectTile(PathWE)").interactOnSecondaryClick("closeDialog()");
                                 }});
                                 text(new TextBuilder() {{
                                     text(PathWEInfo.getShortDescription());
                                     width("64px").height("20px").alignCenter().valignTop();
                                     font("aurulent-sans-16.fnt").color("#000");
+                                    visibleToMouse().interactOnSecondaryClick("closeDialog()");
                                 }});
                             }});
 
                             panel(new PanelBuilder() {{
                                 width("650px").height("80px").alignRight();
                                 childLayoutHorizontal();
+                                visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                                 text(new TextBuilder() {{
                                     text(PathWEInfo.getDescription());
                                     width("600px").height("52px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
+                                    visibleToMouse().interactOnSecondaryClick("closeDialog()");
                                 }});
                             }});
                         }});
@@ -130,32 +138,37 @@ public class BuildingDialog extends MyScreenBuilder {
                         panel(new PanelBuilder("pathNorthToSouthPanel") {{
                             width("850px").height("80px").marginTop("20px").paddingRight("20px");
                             childLayoutHorizontal();
+                            visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                             panel(new PanelBuilder() {{
                                 width("200px").height("52px").alignLeft().valignCenter();
                                 childLayoutVertical();
+                                visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                                 image(new ImageBuilder() {{
                                     filename("assets/icons/button_pathNS.png");
                                     width("64px").height("32px").alignCenter().valignTop();
-                                    visibleToMouse(true).interactOnClick("selectTile(PathNS)");
+                                    visibleToMouse().interactOnClick("selectTile(PathNS)").interactOnSecondaryClick("closeDialog()");
                                 }});
                                 text(new TextBuilder() {{
                                     text(PathNSInfo.getShortDescription());
                                     width("64px").height("20px").alignCenter().valignTop();
                                     font("aurulent-sans-16.fnt").color("#000");
+                                    visibleToMouse().interactOnSecondaryClick("closeDialog()");
                                 }});
                             }});
 
                             panel(new PanelBuilder() {{
                                 width("650px").height("80px").alignRight();
                                 childLayoutHorizontal();
+                                visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                                 text(new TextBuilder() {{
                                     text(PathNSInfo.getDescription());
                                     width("600px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
+                                    visibleToMouse().interactOnSecondaryClick("closeDialog()");
                                 }});
                             }});
                         }});
@@ -165,32 +178,37 @@ public class BuildingDialog extends MyScreenBuilder {
                         panel(new PanelBuilder("pathNorthToEastPanel") {{
                             width("850px").height("80px").marginTop("20px").paddingRight("20px");
                             childLayoutHorizontal();
+                            visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                             panel(new PanelBuilder() {{
                                 width("200px").height("52px").alignLeft().valignCenter();
                                 childLayoutVertical();
+                                visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                                 image(new ImageBuilder() {{
                                     filename("assets/icons/button_pathNE.png");
                                     width("64px").height("32px").alignCenter().valignTop();
-                                    visibleToMouse(true).interactOnClick("selectTile(PathNE)");
+                                    visibleToMouse().interactOnClick("selectTile(PathNE)").interactOnSecondaryClick("closeDialog()");
                                 }});
                                 text(new TextBuilder() {{
                                     text(PathNEInfo.getShortDescription());
                                     width("64px").height("20px").alignCenter().valignTop();
                                     font("aurulent-sans-16.fnt").color("#000");
+                                    visibleToMouse().interactOnSecondaryClick("closeDialog()");
                                 }});
                             }});
 
                             panel(new PanelBuilder() {{
                                 width("650px").height("80px").alignRight();
                                 childLayoutHorizontal();
+                                visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                                 text(new TextBuilder() {{
                                     text(PathNEInfo.getDescription());
                                     width("600px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
+                                    visibleToMouse().interactOnSecondaryClick("closeDialog()");
                                 }});
                             }});
                         }});
@@ -200,32 +218,37 @@ public class BuildingDialog extends MyScreenBuilder {
                         panel(new PanelBuilder("pathWestToNorthPanel") {{
                             width("850px").height("80px").marginTop("20px").paddingRight("20px");
                             childLayoutHorizontal();
+                            visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                             panel(new PanelBuilder() {{
                                 width("200px").height("52px").alignLeft().valignCenter();
                                 childLayoutVertical();
+                                visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                                 image(new ImageBuilder() {{
                                     filename("assets/icons/button_pathWN.png");
                                     width("64px").height("32px").alignCenter().valignTop();
-                                    visibleToMouse(true).interactOnClick("selectTile(PathWN)");
+                                    visibleToMouse().interactOnClick("selectTile(PathWN)").interactOnSecondaryClick("closeDialog()");
                                 }});
                                 text(new TextBuilder() {{
                                     text(PathWNInfo.getShortDescription());
                                     width("64px").height("20px").alignCenter().valignTop();
                                     font("aurulent-sans-16.fnt").color("#000");
+                                    visibleToMouse().interactOnSecondaryClick("closeDialog()");
                                 }});
                             }});
 
                             panel(new PanelBuilder() {{
                                 width("650px").height("80px").alignRight();
                                 childLayoutHorizontal();
+                                visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                                 text(new TextBuilder() {{
                                     text(PathWNInfo.getDescription());
                                     width("600px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
+                                    visibleToMouse().interactOnSecondaryClick("closeDialog()");
                                 }});
                             }});
                         }});
@@ -235,32 +258,37 @@ public class BuildingDialog extends MyScreenBuilder {
                         panel(new PanelBuilder("pathWestToSouthPanel") {{
                             width("850px").height("80px").marginTop("20px").paddingRight("20px");
                             childLayoutHorizontal();
+                            visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                             panel(new PanelBuilder() {{
                                 width("200px").height("52px").alignLeft().valignCenter();
                                 childLayoutVertical();
+                                visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                                 image(new ImageBuilder() {{
                                     filename("assets/icons/button_pathWS.png");
                                     width("64px").height("32px").alignCenter().valignTop();
-                                    visibleToMouse(true).interactOnClick("selectTile(PathWS)");
+                                    visibleToMouse().interactOnClick("selectTile(PathWS)").interactOnSecondaryClick("closeDialog()");
                                 }});
                                 text(new TextBuilder() {{
                                     text(PathWSInfo.getShortDescription());
                                     width("64px").height("20px").alignCenter().valignTop();
                                     font("aurulent-sans-16.fnt").color("#000");
+                                    visibleToMouse().interactOnSecondaryClick("closeDialog()");
                                 }});
                             }});
 
                             panel(new PanelBuilder() {{
                                 width("650px").height("80px").alignRight();
                                 childLayoutHorizontal();
+                                visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                                 text(new TextBuilder() {{
                                     text(PathWSInfo.getDescription());
                                     width("600px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
+                                    visibleToMouse().interactOnSecondaryClick("closeDialog()");
                                 }});
                             }});
                         }});
@@ -270,32 +298,37 @@ public class BuildingDialog extends MyScreenBuilder {
                         panel(new PanelBuilder("pathSouthToEastPanel") {{
                             width("850px").height("80px").marginTop("20px").paddingRight("20px");
                             childLayoutHorizontal();
+                            visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                             panel(new PanelBuilder() {{
                                 width("200px").height("52px").alignLeft().valignCenter();
                                 childLayoutVertical();
+                                visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                                 image(new ImageBuilder() {{
                                     filename("assets/icons/button_pathSE.png");
                                     width("64px").height("32px").alignCenter().valignTop();
-                                    visibleToMouse(true).interactOnClick("selectTile(PathSE)");
+                                    visibleToMouse().interactOnClick("selectTile(PathSE)").interactOnSecondaryClick("closeDialog()");
                                 }});
                                 text(new TextBuilder() {{
                                     text(PathSEInfo.getShortDescription());
                                     width("64px").height("20px").alignCenter().valignTop();
                                     font("aurulent-sans-16.fnt").color("#000");
+                                    visibleToMouse().interactOnSecondaryClick("closeDialog()");
                                 }});
                             }});
 
                             panel(new PanelBuilder() {{
                                 width("650px").height("80px").alignRight();
                                 childLayoutHorizontal();
+                                visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                                 text(new TextBuilder() {{
                                     text(PathSEInfo.getDescription());
                                     width("600px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
+                                    visibleToMouse().interactOnSecondaryClick("closeDialog()");
                                 }});
                             }});
                         }});
@@ -323,32 +356,37 @@ public class BuildingDialog extends MyScreenBuilder {
                         panel(new PanelBuilder("building1Panel") {{
                             width("850px").height("80px").marginTop("20px").paddingRight("20px");
                             childLayoutHorizontal();
+                            visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                             panel(new PanelBuilder() {{
                                 width("200px").height("52px").alignLeft().valignCenter();
                                 childLayoutVertical();
+                                visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                                 image(new ImageBuilder() {{
                                     filename("assets/icons/button_menu_building.png");
                                     width("64px").height("32px").alignCenter().valignTop();
-                                    visibleToMouse(true).interactOnClick("selectTile(Building)");
+                                    visibleToMouse().interactOnClick("selectTile(Building)").interactOnSecondaryClick("closeDialog()");
                                 }});
                                 text(new TextBuilder() {{
                                     text("Building 1");
                                     width("64px").height("20px").alignCenter().valignTop();
                                     font("aurulent-sans-16.fnt").color("#000");
+                                    visibleToMouse().interactOnSecondaryClick("closeDialog()");
                                 }});
                             }});
 
                             panel(new PanelBuilder() {{
                                 width("650px").height("80px").alignRight();
                                 childLayoutHorizontal();
+                                visibleToMouse().interactOnSecondaryClick("closeDialog()");
 
                                 text(new TextBuilder() {{
                                     text("Building 1");
                                     width("600px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
+                                    visibleToMouse().interactOnSecondaryClick("closeDialog()");
                                 }});
                             }});
                         }});
