@@ -4,10 +4,10 @@ import com.jme3.export.Savable;
 import de.herrmann.holger.offtonewworlds.model.TileInfo;
 import de.herrmann.holger.offtonewworlds.model.TileType;
 
-public class PathWestToSouthInfo extends GroundInfo implements Savable {
+public class PathWSInfo extends GroundInfo implements Savable {
 
-    public PathWestToSouthInfo() {
-        super(TileType.PathWestToSouth, "assets/ground/pathWestSouth.glb");
+    public PathWSInfo() {
+        super(TileType.PathWS, "assets/ground/pathWS.glb");
     }
 
     /**

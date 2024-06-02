@@ -101,12 +101,12 @@ public class BuildingDialog extends MyScreenBuilder {
                                 childLayoutVertical();
 
                                 image(new ImageBuilder() {{
-                                    filename("assets/icons/button_pathWestEast.png");
+                                    filename("assets/icons/button_pathWE.png");
                                     width("64px").height("32px").alignCenter().valignTop();
-                                    visibleToMouse(true).interactOnClick("selectTile(PathWestToEast)");
+                                    visibleToMouse(true).interactOnClick("selectTile(PathWE)");
                                 }});
                                 text(new TextBuilder() {{
-                                    text(PathWestToEastInfo.getShortDescription());
+                                    text(PathWEInfo.getShortDescription());
                                     width("64px").height("20px").alignCenter().valignTop();
                                     font("aurulent-sans-16.fnt").color("#000");
                                 }});
@@ -117,7 +117,7 @@ public class BuildingDialog extends MyScreenBuilder {
                                 childLayoutHorizontal();
 
                                 text(new TextBuilder() {{
-                                    text(PathWestToEastInfo.getDescription());
+                                    text(PathWEInfo.getDescription());
                                     width("600px").height("52px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
@@ -136,12 +136,12 @@ public class BuildingDialog extends MyScreenBuilder {
                                 childLayoutVertical();
 
                                 image(new ImageBuilder() {{
-                                    filename("assets/icons/button_pathNorthSouth.png");
+                                    filename("assets/icons/button_pathNS.png");
                                     width("64px").height("32px").alignCenter().valignTop();
-                                    visibleToMouse(true).interactOnClick("selectTile(PathNorthToSouth)");
+                                    visibleToMouse(true).interactOnClick("selectTile(PathNS)");
                                 }});
                                 text(new TextBuilder() {{
-                                    text(PathNorthToSouthInfo.getShortDescription());
+                                    text(PathNSInfo.getShortDescription());
                                     width("64px").height("20px").alignCenter().valignTop();
                                     font("aurulent-sans-16.fnt").color("#000");
                                 }});
@@ -152,7 +152,7 @@ public class BuildingDialog extends MyScreenBuilder {
                                 childLayoutHorizontal();
 
                                 text(new TextBuilder() {{
-                                    text(PathNorthToSouthInfo.getDescription());
+                                    text(PathNSInfo.getDescription());
                                     width("600px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
@@ -171,12 +171,12 @@ public class BuildingDialog extends MyScreenBuilder {
                                 childLayoutVertical();
 
                                 image(new ImageBuilder() {{
-                                    filename("assets/icons/button_pathNorthEast.png");
+                                    filename("assets/icons/button_pathNE.png");
                                     width("64px").height("32px").alignCenter().valignTop();
-                                    visibleToMouse(true).interactOnClick("selectTile(PathNorthToEast)");
+                                    visibleToMouse(true).interactOnClick("selectTile(PathNE)");
                                 }});
                                 text(new TextBuilder() {{
-                                    text(PathNorthToEastInfo.getShortDescription());
+                                    text(PathNEInfo.getShortDescription());
                                     width("64px").height("20px").alignCenter().valignTop();
                                     font("aurulent-sans-16.fnt").color("#000");
                                 }});
@@ -187,7 +187,7 @@ public class BuildingDialog extends MyScreenBuilder {
                                 childLayoutHorizontal();
 
                                 text(new TextBuilder() {{
-                                    text(PathNorthToEastInfo.getDescription());
+                                    text(PathNEInfo.getDescription());
                                     width("600px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
@@ -206,12 +206,12 @@ public class BuildingDialog extends MyScreenBuilder {
                                 childLayoutVertical();
 
                                 image(new ImageBuilder() {{
-                                    filename("assets/icons/button_pathWestNorth.png");
+                                    filename("assets/icons/button_pathWN.png");
                                     width("64px").height("32px").alignCenter().valignTop();
-                                    visibleToMouse(true).interactOnClick("selectTile(PathWestToNorth)");
+                                    visibleToMouse(true).interactOnClick("selectTile(PathWN)");
                                 }});
                                 text(new TextBuilder() {{
-                                    text(PathWestToNorthInfo.getShortDescription());
+                                    text(PathWNInfo.getShortDescription());
                                     width("64px").height("20px").alignCenter().valignTop();
                                     font("aurulent-sans-16.fnt").color("#000");
                                 }});
@@ -222,7 +222,7 @@ public class BuildingDialog extends MyScreenBuilder {
                                 childLayoutHorizontal();
 
                                 text(new TextBuilder() {{
-                                    text(PathWestToNorthInfo.getDescription());
+                                    text(PathWNInfo.getDescription());
                                     width("600px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
@@ -241,12 +241,12 @@ public class BuildingDialog extends MyScreenBuilder {
                                 childLayoutVertical();
 
                                 image(new ImageBuilder() {{
-                                    filename("assets/icons/button_pathWestSouth.png");
+                                    filename("assets/icons/button_pathWS.png");
                                     width("64px").height("32px").alignCenter().valignTop();
-                                    visibleToMouse(true).interactOnClick("selectTile(PathWestToSouth)");
+                                    visibleToMouse(true).interactOnClick("selectTile(PathWS)");
                                 }});
                                 text(new TextBuilder() {{
-                                    text(PathWestToSouthInfo.getShortDescription());
+                                    text(PathWSInfo.getShortDescription());
                                     width("64px").height("20px").alignCenter().valignTop();
                                     font("aurulent-sans-16.fnt").color("#000");
                                 }});
@@ -257,7 +257,7 @@ public class BuildingDialog extends MyScreenBuilder {
                                 childLayoutHorizontal();
 
                                 text(new TextBuilder() {{
-                                    text(PathWestToSouthInfo.getDescription());
+                                    text(PathWSInfo.getDescription());
                                     width("600px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");
@@ -276,12 +276,12 @@ public class BuildingDialog extends MyScreenBuilder {
                                 childLayoutVertical();
 
                                 image(new ImageBuilder() {{
-                                    filename("assets/icons/button_pathSouthEast.png");
+                                    filename("assets/icons/button_pathSE.png");
                                     width("64px").height("32px").alignCenter().valignTop();
-                                    visibleToMouse(true).interactOnClick("selectTile(PathSouthToEast)");
+                                    visibleToMouse(true).interactOnClick("selectTile(PathSE)");
                                 }});
                                 text(new TextBuilder() {{
-                                    text(PathSouthToEastInfo.getShortDescription());
+                                    text(PathSEInfo.getShortDescription());
                                     width("64px").height("20px").alignCenter().valignTop();
                                     font("aurulent-sans-16.fnt").color("#000");
                                 }});
@@ -292,7 +292,7 @@ public class BuildingDialog extends MyScreenBuilder {
                                 childLayoutHorizontal();
 
                                 text(new TextBuilder() {{
-                                    text(PathSouthToEastInfo.getDescription());
+                                    text(PathSEInfo.getDescription());
                                     width("600px").alignLeft().valignCenter();
                                     wrap(true);
                                     font("aurulent-sans-16.fnt").color("#000");

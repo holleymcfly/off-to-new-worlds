@@ -13,12 +13,12 @@ public enum TileType {
 
     // Ground tiles
     Grass(1),
-    PathWestToEast(2),
-    PathNorthToSouth(3),
-    PathNorthToEast(4),
-    PathWestToNorth(5),
-    PathWestToSouth(6),
-    PathSouthToEast(7),
+    PathWE(2),
+    PathNS(3),
+    PathNE(4),
+    PathWN(5),
+    PathWS(6),
+    PathSE(7),
 
     // Buildings
     Building(10);
@@ -48,12 +48,12 @@ public enum TileType {
 
         return switch (type) {
             case Grass -> new GrassInfo();
-            case PathWestToEast -> new PathWestToEastInfo();
-            case PathNorthToSouth -> new PathNorthToSouthInfo();
-            case PathNorthToEast -> new PathNorthToEastInfo();
-            case PathWestToNorth -> new PathWestToNorthInfo();
-            case PathWestToSouth -> new PathWestToSouthInfo();
-            case PathSouthToEast -> new PathSouthToEastInfo();
+            case PathWE -> new PathWEInfo();
+            case PathNS -> new PathNSInfo();
+            case PathNE -> new PathNEInfo();
+            case PathWN -> new PathWNInfo();
+            case PathWS -> new PathWSInfo();
+            case PathSE -> new PathSEInfo();
             case Building -> new BuildingInfo();
         };
     }

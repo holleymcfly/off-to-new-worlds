@@ -4,10 +4,10 @@ import com.jme3.export.Savable;
 import de.herrmann.holger.offtonewworlds.model.TileInfo;
 import de.herrmann.holger.offtonewworlds.model.TileType;
 
-public class PathNorthToEastInfo extends GroundInfo implements Savable {
+public class PathWNInfo extends GroundInfo implements Savable {
 
-    public PathNorthToEastInfo() {
-        super(TileType.PathNorthToEast, "assets/ground/pathNorthEast.glb");
+    public PathWNInfo() {
+        super(TileType.PathWN, "assets/ground/pathWN.glb");
     }
 
     /**
@@ -22,13 +22,13 @@ public class PathNorthToEastInfo extends GroundInfo implements Savable {
      * Returns the short description for this tile.
      */
     public static String getShortDescription() {
-        return "Pfad von Nord nach Ost.";
+        return "Pfad von West nach Nord.";
     }
 
     /**
      * Returns the description for this tile.
      */
     public static String getDescription() {
-       return "Ein Pfad von Norden nach Osten.";
+       return "Ein Pfad, der von Westen in den Norden führt.";
     }
 }
