@@ -275,6 +275,10 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
      */
     private void checkWestEastMovement() {
 
+        if (DialogsHelper.isModalDialogOpen()) {
+            return;
+        }
+
         if (inputManager.getCursorPosition().x > cam.getWidth() - 20) {
             direction[SIDE] = 1;
         }
@@ -290,6 +294,10 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
      * Sets the direction flag if the cursor is on the upper or bottom side of the screen.
      */
     private void checkNorthSouthMovement() {
+
+        if (DialogsHelper.isModalDialogOpen()) {
+            return;
+        }
 
         if (inputManager.getCursorPosition().y < 20) {
             direction[FWD] = 1;
