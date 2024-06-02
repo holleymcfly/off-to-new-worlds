@@ -67,6 +67,6 @@ public class BuildingDialogController extends BaseAppState implements ScreenCont
     public void selectTile(String buildInfo) {
 
         application.getBuilderHelper().setTileTypeToBeBuilt(TileType.valueOf(buildInfo));
-        Util.removeScreenById(application, DialogId.BuildingDialog.name());
+        Util.removeDialogById(application, DialogId.BuildingDialog.name());
     }
 }

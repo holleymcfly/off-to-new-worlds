@@ -4,6 +4,9 @@ import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.post.SceneProcessor;
 import com.jme3.util.SafeArrayList;
 import de.herrmann.holger.offtonewworlds.core.OffToNewWorlds;
+import de.herrmann.holger.offtonewworlds.dialogs.DialogsHelper;
+import de.herrmann.holger.offtonewworlds.dialogs.MyScreenBuilder;
+import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 
@@ -95,23 +98,35 @@ public class Util {
         }
     }
 
+    public static void createDialog(OffToNewWorlds application, MyScreenBuilder dialog, String screenId) {
+
+        NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(application.getAssetManager(),
+                application.getInputManager(), application.getAudioRenderer(), application.getGuiViewPort());
+        Nifty nifty = niftyDisplay.getNifty();
+
+        dialog.create(nifty);
+        nifty.addScreen(screenId, dialog.build(nifty));
+        nifty.gotoScreen(screenId);
+
+        application.getGuiViewPort().addProcessor(niftyDisplay);
+        DialogsHelper.addModalDialog(screenId, dialog);
+    }
+
     /**
      * Returns the screen with the given id.
      */
-    public static void removeScreenById(OffToNewWorlds application, String screenId) {
+    public static void removeDialogById(OffToNewWorlds application, String dialogId) {
 
         SafeArrayList<SceneProcessor> processors = application.getGuiViewPort().getProcessors();
         for (SceneProcessor processor : processors) {
 
-            if (!(processor instanceof NiftyJmeDisplay)) {
-                continue;
-            }
-
-            Screen screen = ((NiftyJmeDisplay) processor).getNifty().getScreen(screenId);
+            Screen screen = ((NiftyJmeDisplay) processor).getNifty().getScreen(dialogId);
             if (screen != null) {
                 application.getGuiViewPort().removeProcessor(processor);
-                return;
+                break;
             }
         }
+
+        DialogsHelper.removeDialogById(dialogId);
     }
 }

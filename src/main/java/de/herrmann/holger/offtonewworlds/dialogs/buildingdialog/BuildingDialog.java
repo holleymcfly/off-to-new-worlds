@@ -1,19 +1,27 @@
 package de.herrmann.holger.offtonewworlds.dialogs.buildingdialog;
 
 import de.herrmann.holger.offtonewworlds.core.OffToNewWorlds;
+import de.herrmann.holger.offtonewworlds.dialogs.MyScreenBuilder;
 import de.herrmann.holger.offtonewworlds.dialogs.MyScrollPanelControl;
 import de.herrmann.holger.offtonewworlds.model.ground.*;
 import de.lessvoid.nifty.Nifty;
-import de.lessvoid.nifty.builder.*;
+import de.lessvoid.nifty.builder.ImageBuilder;
+import de.lessvoid.nifty.builder.LayerBuilder;
+import de.lessvoid.nifty.builder.PanelBuilder;
+import de.lessvoid.nifty.builder.TextBuilder;
 import de.lessvoid.nifty.controls.scrollpanel.builder.ScrollPanelBuilder;
 
 import javax.annotation.Nonnull;
 
-public class BuildingDialog extends ScreenBuilder {
+public class BuildingDialog extends MyScreenBuilder {
 
-    public BuildingDialog(@Nonnull String id, OffToNewWorlds application, Nifty nifty) {
+    public BuildingDialog(@Nonnull String id, OffToNewWorlds application) {
         super(id);
         controller(new BuildingDialogController(application));
+    }
+
+    @Override
+    public void create(Nifty nifty) {
         buildUserInterface(nifty);
     }
 

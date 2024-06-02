@@ -24,6 +24,7 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.control.Control;
 import com.jme3.texture.Image;
 import com.jme3.texture.Texture;
+import de.herrmann.holger.offtonewworlds.dialogs.DialogsHelper;
 import de.herrmann.holger.offtonewworlds.model.TileInfo;
 import de.herrmann.holger.offtonewworlds.util.Constants;
 import de.herrmann.holger.offtonewworlds.util.Util;
@@ -353,6 +354,10 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
     @Override
     public void onAction(String name, boolean isPressed, float tpf) {
 
+        if (DialogsHelper.isModalDialogOpen()) {
+            return;
+        }
+
         if (MOUSE_LEFT_CLICK.equals(name) && !isPressed) {
             handleLeftMouseClick(tpf);
         }
@@ -429,6 +434,10 @@ public class RtsCamera implements Control, ActionListener, AnalogListener {
      */
     @Override
     public void onAnalog(String name, float value, float tpf) {
+
+        if (DialogsHelper.isModalDialogOpen()) {
+            return;
+        }
 
         if (middleMouseButtonClicked) {
             if (name.equals(NORTH)) {
