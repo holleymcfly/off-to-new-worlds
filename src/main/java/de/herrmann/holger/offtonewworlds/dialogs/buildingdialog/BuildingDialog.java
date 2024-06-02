@@ -264,6 +264,41 @@ public class BuildingDialog extends MyScreenBuilder {
                                 }});
                             }});
                         }});
+
+                        // Path from South to East
+                        // ************************************************
+                        panel(new PanelBuilder("pathSouthToEastPanel") {{
+                            width("850px").height("80px").marginTop("20px").paddingRight("20px");
+                            childLayoutHorizontal();
+
+                            panel(new PanelBuilder() {{
+                                width("200px").height("52px").alignLeft().valignCenter();
+                                childLayoutVertical();
+
+                                image(new ImageBuilder() {{
+                                    filename("assets/icons/button_pathSouthEast.png");
+                                    width("64px").height("32px").alignCenter().valignTop();
+                                    visibleToMouse(true).interactOnClick("selectTile(PathSouthToEast)");
+                                }});
+                                text(new TextBuilder() {{
+                                    text(PathSouthToEastInfo.getShortDescription());
+                                    width("64px").height("20px").alignCenter().valignTop();
+                                    font("aurulent-sans-16.fnt").color("#000");
+                                }});
+                            }});
+
+                            panel(new PanelBuilder() {{
+                                width("650px").height("80px").alignRight();
+                                childLayoutHorizontal();
+
+                                text(new TextBuilder() {{
+                                    text(PathSouthToEastInfo.getDescription());
+                                    width("600px").alignLeft().valignCenter();
+                                    wrap(true);
+                                    font("aurulent-sans-16.fnt").color("#000");
+                                }});
+                            }});
+                        }});
                     }});
                 }});
 
