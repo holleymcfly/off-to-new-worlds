@@ -21,9 +21,10 @@ public enum TileType {
     PathSE(7),
     PathNES(8),
     PathWNE(9),
+    PathWNS(10),
 
     // Buildings
-    Building(10);
+    Building(50);
 
     TileType(int type) {
         this.tileTypeInt = type;
@@ -58,6 +59,7 @@ public enum TileType {
             case PathSE -> new PathSEInfo();
             case PathNES -> new PathNESInfo();
             case PathWNE -> new PathWNEInfo();
+            case PathWNS -> new PathWNSInfo();
             case Building -> new BuildingInfo();
         };
     }

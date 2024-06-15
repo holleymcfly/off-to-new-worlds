@@ -4,10 +4,10 @@ import com.jme3.export.Savable;
 import de.herrmann.holger.offtonewworlds.model.TileInfo;
 import de.herrmann.holger.offtonewworlds.model.TileType;
 
-public class PathWNEInfo extends GroundInfo implements Savable {
+public class PathWNSInfo extends GroundInfo implements Savable {
 
-    public PathWNEInfo() {
-        super(TileType.PathWNE, "assets/ground/pathWNE.glb");
+    public PathWNSInfo() {
+        super(TileType.PathWNS, "assets/ground/pathWNS.glb");
     }
 
     /**
@@ -22,13 +22,13 @@ public class PathWNEInfo extends GroundInfo implements Savable {
      * Returns the short description for this tile.
      */
     public static String getShortDescription() {
-        return "Pfad von West nach Nord und Ost.";
+        return "Pfad von West nach Nord und Süd.";
     }
 
     /**
      * Returns the description for this tile.
      */
     public static String getDescription() {
-       return "Ein Pfad mit einer Kreuzung; er hat Wege in den Westen, nach Norden und Osten.";
+       return "Ein Pfad mit einer Kreuzung; er hat Wege in den Westen, nach Norden und in den Süden.";
     }
 }
