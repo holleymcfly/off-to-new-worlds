@@ -20,6 +20,7 @@ public enum TileType {
     PathWS(6),
     PathSE(7),
     PathNES(8),
+    PathWNE(9),
 
     // Buildings
     Building(10);
@@ -56,6 +57,7 @@ public enum TileType {
             case PathWS -> new PathWSInfo();
             case PathSE -> new PathSEInfo();
             case PathNES -> new PathNESInfo();
+            case PathWNE -> new PathWNEInfo();
             case Building -> new BuildingInfo();
         };
     }
