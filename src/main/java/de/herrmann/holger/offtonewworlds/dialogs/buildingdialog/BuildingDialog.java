@@ -492,6 +492,46 @@ public class BuildingDialog extends MyScreenBuilder {
                                 }});
                             }});
                         }});
+
+                        // Path to all directions
+                        // ************************************************
+                        panel(new PanelBuilder("pathAllDirectionsPanel") {{
+                            width("850px").height("80px").marginTop("20px").paddingRight("20px");
+                            childLayoutHorizontal();
+                            visibleToMouse().interactOnSecondaryClick("closeDialog()");
+
+                            panel(new PanelBuilder() {{
+                                width("200px").height("52px").alignLeft().valignCenter();
+                                childLayoutVertical();
+                                visibleToMouse().interactOnSecondaryClick("closeDialog()");
+
+                                image(new ImageBuilder() {{
+                                    filename("assets/icons/button_pathNESW.png");
+                                    width("64px").height("32px").alignCenter().valignTop();
+                                    visibleToMouse().interactOnClick("selectTile(PathNESW)").interactOnSecondaryClick("closeDialog()");
+                                }});
+                                text(new TextBuilder() {{
+                                    text(PathNESWInfo.getShortDescription());
+                                    width("64px").height("20px").alignCenter().valignTop();
+                                    font("aurulent-sans-16.fnt").color("#000");
+                                    visibleToMouse().interactOnSecondaryClick("closeDialog()");
+                                }});
+                            }});
+
+                            panel(new PanelBuilder() {{
+                                width("650px").height("80px").alignRight();
+                                childLayoutHorizontal();
+                                visibleToMouse().interactOnSecondaryClick("closeDialog()");
+
+                                text(new TextBuilder() {{
+                                    text(PathNESWInfo.getDescription());
+                                    width("600px").alignLeft().valignCenter();
+                                    wrap(true);
+                                    font("aurulent-sans-16.fnt").color("#000");
+                                    visibleToMouse().interactOnSecondaryClick("closeDialog()");
+                                }});
+                            }});
+                        }});
                     }});
                 }});
 
