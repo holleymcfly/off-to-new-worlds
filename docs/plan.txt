@@ -1,0 +1,17 @@
+- Wege sollen sich automatisch anhand ihrer Nachbarteile verändern (benachbarte Wege führen immer zusammen)
+- Hauptquartier
+- Scrolling verbessern (mittlere Maustaste)
+- Ressourcen-Fenster
+- Wohngebäude
+- Funktion zum Erhalt neuer Einwohner
+- Forschungsmenü
+- Tagesablauf (Sonnenaufgang bis Untergang) mit Uhrenanzeige
+- Funktion für die Erforschung (Zeitablauf)
+- Produktionsgebäude
+- Funktion für die Produktion innerhalb des Gebäudes
+- animierte Bewohner, die Waren transportieren (vom Produktionsgebäude zum Lager)
+- Militärgebäude
+- sonstige Gebäude
+- Zeitablauf beschleunigen
+- Hintergrundmusik
+- Soundeffekte für Gebäude
